@@ -18,6 +18,8 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Sun, Cloud, CloudRain, Newspaper, Building, Star } from 'lucide-react';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+
 
 type LocationPageProps = {
   params: { slug: string };
@@ -42,11 +44,11 @@ const mockLocationData = {
         { title: "Authorities issue advisory for monsoon preparedness", source: "NDTV" },
     ],
     touristPlaces: [
-        { name: "Gateway of India", image: "https://picsum.photos/seed/gateway/400/300", hint: "historic monument" },
-        { name: "Marine Drive", image: "https://picsum.photos/seed/marinedrive/400/300", hint: "city skyline" },
-        { name: "Elephanta Caves", image: "https://picsum.photos/seed/elephanta/400/300", hint: "ancient caves" },
-        { name: "Chhatrapati Shivaji Terminus", image: "https://picsum.photos/seed/cst/400/300", hint: "train station" },
-        { name: "Siddhivinayak Temple", image: "https://picsum.photos/seed/siddhi/400/300", hint: "temple architecture" },
+        { name: "Gateway of India", image: "https://picsum.photos/seed/gateway/400/300", hint: "historic monument", description: "An arch-monument built in the early 20th century, located on the waterfront in South Mumbai." },
+        { name: "Marine Drive", image: "https://picsum.photos/seed/marinedrive/400/300", hint: "city skyline", description: "A 3.6-kilometre-long boulevard in South Mumbai. It is a 'C'-shaped six-lane concrete road along the coast." },
+        { name: "Elephanta Caves", image: "https://picsum.photos/seed/elephanta/400/300", hint: "ancient caves", description: "A network of sculpted caves located on Elephanta Island, or Gharapuri in Mumbai Harbour." },
+        { name: "Chhatrapati Shivaji Terminus", image: "https://picsum.photos/seed/cst/400/300", hint: "train station", description: "A historic railway station and a UNESCO World Heritage Site in Mumbai, Maharashtra, India." },
+        { name: "Siddhivinayak Temple", image: "https://picsum.photos/seed/siddhi/400/300", hint: "temple architecture", description: "A Hindu temple dedicated to Lord Shri Ganesh. It is one of the richest temples in Mumbai." },
     ]
 }
 
@@ -114,14 +116,29 @@ export default function LocationPage({ params }: LocationPageProps) {
                             {mockLocationData.touristPlaces.map(place => (
                                 <CarouselItem key={place.name} className="md:basis-1/2 lg:basis-1/3">
                                     <div className="p-1">
-                                        <Card>
-                                            <CardContent className="flex aspect-video items-center justify-center p-0 relative overflow-hidden rounded-lg">
-                                                <Image src={place.image} alt={place.name} fill className='object-cover' data-ai-hint={place.hint}/>
-                                                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
-                                                  <span className="text-lg font-semibold text-white">{place.name}</span>
-                                                </div>
-                                            </CardContent>
-                                        </Card>
+                                        <Dialog>
+                                            <DialogTrigger asChild>
+                                                <Card className="overflow-hidden cursor-pointer">
+                                                    <CardContent className="flex aspect-video items-center justify-center p-0 relative overflow-hidden rounded-lg">
+                                                        <Image src={place.image} alt={place.name} fill className='object-cover' data-ai-hint={place.hint}/>
+                                                        <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
+                                                          <span className="text-lg font-semibold text-white">{place.name}</span>
+                                                        </div>
+                                                    </CardContent>
+                                                </Card>
+                                            </DialogTrigger>
+                                            <DialogContent className="sm:max-w-xl">
+                                                <DialogHeader>
+                                                    <div className="relative h-48 w-full rounded-lg overflow-hidden mb-4">
+                                                        <Image src={place.image} alt={place.name} fill className='object-cover' data-ai-hint={place.hint}/>
+                                                    </div>
+                                                    <DialogTitle className="text-2xl font-headline">{place.name}</DialogTitle>
+                                                    <DialogDescription className="text-base pt-2">
+                                                        {place.description}
+                                                    </DialogDescription>
+                                                </DialogHeader>
+                                            </DialogContent>
+                                        </Dialog>
                                     </div>
                                 </CarouselItem>
                             ))}
