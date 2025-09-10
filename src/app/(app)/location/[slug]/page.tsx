@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import {
   Card,
   CardContent,
@@ -39,9 +40,9 @@ const mockLocationData = {
         { day: 'Day After', temp: '29°C', condition: 'Light Rain', icon: <CloudRain/> },
     ],
     news: [
-        { title: "City metro's new line to open next month", source: "The Times of India" },
-        { title: "Annual food festival to kick off this weekend", source: "Hindustan Times" },
-        { title: "Authorities issue advisory for monsoon preparedness", source: "NDTV" },
+        { title: "City metro's new line to open next month", source: "The Times of India", url: "https://timesofindia.indiatimes.com/" },
+        { title: "Annual food festival to kick off this weekend", source: "Hindustan Times", url: "https://www.hindustantimes.com/" },
+        { title: "Authorities issue advisory for monsoon preparedness", source: "NDTV", url: "https://www.ndtv.com/" },
     ],
     touristPlaces: [
         { name: "Gateway of India", image: "https://picsum.photos/seed/gateway/400/300", hint: "historic monument", description: "An arch-monument built in the early 20th century, located on the waterfront in South Mumbai." },
@@ -179,8 +180,10 @@ export default function LocationPage({ params }: LocationPageProps) {
                 <CardContent className="space-y-4">
                      {mockLocationData.news.map((item, index) => (
                         <div key={item.title}>
-                            <p className="font-medium leading-snug">{item.title}</p>
-                            <p className="text-sm text-muted-foreground">{item.source}</p>
+                            <a href={item.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                                <p className="font-medium leading-snug">{item.title}</p>
+                                <p className="text-sm text-muted-foreground">{item.source}</p>
+                            </a>
                             {index < mockLocationData.news.length - 1 && <Separator className="mt-4" />}
                         </div>
                     ))}
