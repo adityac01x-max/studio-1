@@ -9,7 +9,7 @@ export type Trip = {
   status: 'Completed' | 'Upcoming' | 'In Progress';
   accommodation?: {
     name: string;
-    type: 'Hotel' | 'Resort' | 'Guesthouse';
+    type: string; // Keep as string to accommodate generated data e.g. "Hotel", "Resort"
   };
   visitedPlaces?: {
     name: string;
