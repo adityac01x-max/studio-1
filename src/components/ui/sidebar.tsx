@@ -120,6 +120,21 @@ const SidebarContent = React.forwardRef<
 })
 SidebarContent.displayName = "SidebarContent"
 
+const SidebarFooter = React.forwardRef<
+  React.ElementRef<"div">,
+  React.ComponentProps<"div">
+>(({ className, ...props }, ref) => {
+  return (
+    <div
+      ref={ref}
+      className={cn("mt-auto flex flex-col gap-y-1 border-t px-3 py-2", className)}
+      {...props}
+    />
+  )
+})
+SidebarFooter.displayName = "SidebarFooter"
+
+
 const SidebarMenu = React.forwardRef<
   React.ElementRef<"div">,
   React.ComponentProps<"div">
@@ -188,7 +203,7 @@ const SidebarMenuButton = React.forwardRef<
         variant={variant}
         className={cn(
           "h-10 w-full justify-start",
-          isActive && "bg-primary/10 text-primary",
+          isActive && "bg-primary/10 text-primary hover:bg-primary/20",
           className
         )}
         {...props}
@@ -276,6 +291,7 @@ export {
   Sidebar,
   SidebarHeader,
   SidebarContent,
+  SidebarFooter,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,

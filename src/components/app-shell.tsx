@@ -11,6 +11,7 @@ import {
   Building2,
   Menu,
   Search,
+  LogOut,
 } from 'lucide-react';
 import {
   SidebarProvider,
@@ -21,6 +22,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarInset,
+  SidebarFooter,
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,16 +31,21 @@ import { Logo } from '@/components/logo';
 import { SosButton } from '@/components/sos-button';
 import { Chatbot } from '@/components/chatbot';
 
-const navItems = [
+const touristNavItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/itinerary-planner', label: 'Itinerary Planner', icon: ListChecks },
   { href: '/location/mumbai', label: 'Location Explorer', icon: Map },
-  { href: '/enlist-agency', label: 'Enlist Agency', icon: Building2 },
+];
+
+const adminNavItems = [
   { href: '/admin', label: 'Admin Panel', icon: Shield },
+  { href: '/enlist-agency', label: 'Enlist Agency', icon: Building2 },
 ];
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const isAdmin = pathname.startsWith('/admin') || pathname.startsWith('/enlist-agency');
+  const navItems = isAdmin ? adminNavItems : touristNavItems;
 
   const sidebarContent = (
     <>
@@ -62,6 +69,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           ))}
         </SidebarMenu>
       </SidebarContent>
+       <SidebarFooter>
+        <SidebarMenuItem>
+          <Link href="/login" passHref legacyBehavior>
+            <SidebarMenuButton tooltip={{ children: 'Logout' }}>
+              <LogOut />
+              <span>Logout</span>
+            </SidebarMenuButton>
+          </Link>
+        </SidebarMenuItem>
+      </SidebarFooter>
     </>
   );
   
@@ -99,8 +116,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </header>
           <main className="flex-1 p-4 md:p-6">{children}</main>
         </SidebarInset>
-        <SosButton />
-        <Chatbot />
+        {!isAdmin && <SosButton />}
+        {!isAdmin && <Chatbot />}
       </div>
     </SidebarProvider>
   );

@@ -11,7 +11,7 @@ export default function Home() {
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         <Logo />
         <Button asChild>
-          <Link href="/dashboard">Go to App <ArrowRight className="ml-2" /></Link>
+          <Link href="/login">Get Started <ArrowRight className="ml-2" /></Link>
         </Button>
       </header>
 
@@ -37,7 +37,7 @@ export default function Home() {
             </p>
             <div className="mt-8">
               <Button size="lg" asChild>
-                <Link href="/dashboard">
+                <Link href="/login">
                   Start Your Journey
                   <ArrowRight className="ml-2" />
                 </Link>
