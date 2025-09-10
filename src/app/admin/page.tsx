@@ -1,6 +1,7 @@
+
 'use client';
 
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Line, LineChart, ResponsiveContainer } from 'recharts';
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   ChartContainer,
@@ -20,7 +21,7 @@ import { Badge } from '@/components/ui/badge';
 import type { SOSAlert } from '@/lib/types';
 import { format } from 'date-fns';
 import { AppShell } from '@/components/app-shell';
-import { BellRing, TrendingUp } from 'lucide-react';
+import { BellRing, TrendingUp, MapPin } from 'lucide-react';
 
 const mockAlerts: SOSAlert[] = [
   { id: '1', userName: 'Anjali Sharma', location: 'Goa', time: new Date('2024-08-10T14:30:00'), status: 'Pending' },
@@ -58,6 +59,14 @@ const sosChartConfig: ChartConfig = {
     }
 }
 
+const mockDestinationData = [
+    { location: 'Mumbai', trips: 45, itineraries: 120, sos: 1 },
+    { location: 'Delhi', trips: 62, itineraries: 150, sos: 0 },
+    { location: 'Goa', trips: 88, itineraries: 210, sos: 1 },
+    { location: 'Jaipur', trips: 35, itineraries: 95, sos: 1 },
+    { location: 'Shimla', trips: 25, itineraries: 70, sos: 1 },
+    { location: 'Kolkata', trips: 40, itineraries: 80, sos: 0 },
+];
 
 export default function AdminPage() {
   return (
@@ -85,6 +94,36 @@ export default function AdminPage() {
                 </CardHeader>
             </Card>
         </div>
+        
+        <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2"><MapPin/> Popular Destinations</CardTitle>
+                <CardDescription>Analytics based on tourist activity.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Location</TableHead>
+                            <TableHead className="text-right">Trips</TableHead>
+                            <TableHead className="text-right">Itinerary Requests</TableHead>
+                            <TableHead className="text-right">SOS Alerts</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {mockDestinationData.sort((a,b) => b.trips - a.trips).map(dest => (
+                            <TableRow key={dest.location}>
+                                <TableCell className="font-medium">{dest.location}</TableCell>
+                                <TableCell className="text-right">{dest.trips}</TableCell>
+                                <TableCell className="text-right">{dest.itineraries}</TableCell>
+                                <TableCell className="text-right">{dest.sos}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </CardContent>
+        </Card>
+
 
         <div className="grid gap-6 md:grid-cols-2">
             <Card>
