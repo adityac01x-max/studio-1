@@ -12,6 +12,8 @@ import type { Trip } from '@/lib/types';
 import { format } from 'date-fns';
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartConfig } from '@/components/ui/chart';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { TripDetails } from './trip-details';
 
 type LocationAdminPageProps = {
   params: { slug: string };
@@ -27,6 +29,12 @@ const mockLocationTrips: Trip[] = [
     mode: 'flight',
     travelers: ['Anjali', 'Rohan'],
     status: 'Completed',
+    accommodation: { name: 'The Taj Mahal Palace', type: 'Hotel' },
+    visitedPlaces: [
+        { name: 'Gateway of India', rating: 5, review: 'Absolutely breathtaking, a must-see.' },
+        { name: 'Marine Drive', rating: 4, review: 'Beautiful promenade, great for evening walks.' }
+    ],
+    tripExperience: 'Had a wonderful time exploring Mumbai. The food was incredible and the sights were amazing. The accommodation at the Taj was superb.'
   },
   {
     id: '2',
@@ -37,6 +45,11 @@ const mockLocationTrips: Trip[] = [
     mode: 'car',
     travelers: ['Amit'],
     status: 'Completed',
+    accommodation: { name: 'Trident Nariman Point', type: 'Hotel' },
+    visitedPlaces: [
+        { name: 'Siddhivinayak Temple', rating: 5, review: 'Very spiritual and peaceful experience.' },
+    ],
+    tripExperience: 'A quick but fulfilling trip. The drive was smooth and the temple visit was the highlight.'
   },
    {
     id: '3',
@@ -165,26 +178,36 @@ export default function LocationAdminPage({ params }: LocationAdminPageProps) {
                         </TableHeader>
                         <TableBody>
                         {mockLocationTrips.map((trip) => (
-                            <TableRow key={trip.id}>
-                                <TableCell>
-                                    <div className="flex items-center gap-2">
-                                        {modeIcons[trip.mode]}
-                                        <div>
-                                            <div className="font-medium">{trip.origin}</div>
-                                            <div className="text-sm text-muted-foreground">to {trip.destination}</div>
+                           <Dialog key={trip.id}>
+                            <DialogTrigger asChild>
+                                <TableRow className="cursor-pointer">
+                                    <TableCell>
+                                        <div className="flex items-center gap-2">
+                                            {modeIcons[trip.mode]}
+                                            <div>
+                                                <div className="font-medium">{trip.origin}</div>
+                                                <div className="text-sm text-muted-foreground">to {trip.destination}</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </TableCell>
-                                <TableCell>{trip.travelers.join(', ')}</TableCell>
-                                <TableCell>{format(trip.startTime, 'MMM d, yyyy')}</TableCell>
-                                <TableCell>
-                                    <Badge variant={trip.status === 'Completed' ? 'secondary' : 'default'}
-                                     className={trip.status === 'Upcoming' ? 'bg-blue-500/20 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400' : ''}
-                                    >
-                                    {trip.status}
-                                    </Badge>
-                                </TableCell>
-                            </TableRow>
+                                    </TableCell>
+                                    <TableCell>{trip.travelers.join(', ')}</TableCell>
+                                    <TableCell>{format(trip.startTime, 'MMM d, yyyy')}</TableCell>
+                                    <TableCell>
+                                        <Badge variant={trip.status === 'Completed' ? 'secondary' : 'default'}
+                                        className={trip.status === 'Upcoming' ? 'bg-blue-500/20 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400' : ''}
+                                        >
+                                        {trip.status}
+                                        </Badge>
+                                    </TableCell>
+                                </TableRow>
+                                </DialogTrigger>
+                                <DialogContent className="max-w-3xl">
+                                    <DialogHeader>
+                                        <DialogTitle>Trip Details: {trip.tripNumber}</DialogTitle>
+                                    </DialogHeader>
+                                    <TripDetails trip={trip} />
+                                </DialogContent>
+                            </Dialog>
                         ))}
                         </TableBody>
                     </Table>

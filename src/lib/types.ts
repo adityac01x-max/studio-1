@@ -7,6 +7,16 @@ export type Trip = {
   mode: 'flight' | 'train' | 'bus' | 'car';
   travelers: string[];
   status: 'Completed' | 'Upcoming' | 'In Progress';
+  accommodation?: {
+    name: string;
+    type: 'Hotel' | 'Resort' | 'Guesthouse';
+  };
+  visitedPlaces?: {
+    name: string;
+    rating: number;
+    review: string;
+  }[];
+  tripExperience?: string;
 };
 
 export type SOSAlert = {
