@@ -24,12 +24,15 @@ import { format } from 'date-fns';
 import { AppShell } from '@/components/app-shell';
 import { BellRing, TrendingUp, MapPin } from 'lucide-react';
 import Link from 'next/link';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { SosAlertDetails } from './sos-alert-details';
+
 
 const mockAlerts: SOSAlert[] = [
   { id: '1', userName: 'Anjali Sharma', location: 'Goa', time: new Date('2024-08-10T14:30:00'), status: 'Pending' },
-  { id: '2', userName: 'Rohan Mehra', location: 'Shimla', time: new Date('2024-08-10T12:15:00'), status: 'Resolved' },
-  { id: '3', userName: 'Priya Singh', location: 'Jaipur', time: new Date('2024-08-09T22:00:00'), status: 'Resolved' },
-  { id: '4', userName: 'Vikram Rathod', location: 'Mumbai', time: new Date('2024-08-10T15:00:00'), status: 'In Progress' },
+  { id: '2', userName: 'Rohan Mehra', location: 'Shimla', time: new Date('2024-08-10T12:15:00'), status: 'Resolved', resolution: 'Contacted local authorities and confirmed user was safe. Lost, but found way back.', caseId: 'SH-24-08-123' },
+  { id: '3', userName: 'Priya Singh', location: 'Jaipur', time: new Date('2024-08-09T22:00:00'), status: 'Resolved', resolution: 'Medical emergency. Ambulance dispatched and user was transported to a local hospital. User confirmed to be in stable condition.', caseId: 'JP-24-08-456' },
+  { id: '4', userName: 'Vikram Rathod', location: 'Mumbai', time: new Date('2024-08-10T15:00:00'), status: 'In Progress', resolution: 'Initial contact made. User is reporting a vehicle breakdown. Coordinating with a local tow service.' },
 ];
 
 const tripsData = [
@@ -149,18 +152,28 @@ export default function AdminPage() {
                         </TableHeader>
                         <TableBody>
                         {mockAlerts.map(alert => (
-                            <TableRow key={alert.id} className={alert.status === 'Pending' ? 'bg-destructive/10' : ''}>
-                                <TableCell className="font-medium">{alert.userName}</TableCell>
-                                <TableCell>{alert.location}</TableCell>
-                                <TableCell>{format(alert.time, 'MMM d, h:mm a')}</TableCell>
-                                <TableCell>
-                                    <Badge variant={
-                                        alert.status === 'Resolved' ? 'secondary' : alert.status === 'Pending' ? 'destructive' : 'default'
-                                    }>
-                                    {alert.status}
-                                    </Badge>
-                                </TableCell>
-                            </TableRow>
+                           <Dialog key={alert.id}>
+                                <DialogTrigger asChild>
+                                    <TableRow className={`cursor-pointer ${alert.status === 'Pending' ? 'bg-destructive/10' : ''}`}>
+                                        <TableCell className="font-medium">{alert.userName}</TableCell>
+                                        <TableCell>{alert.location}</TableCell>
+                                        <TableCell>{format(alert.time, 'MMM d, h:mm a')}</TableCell>
+                                        <TableCell>
+                                            <Badge variant={
+                                                alert.status === 'Resolved' ? 'secondary' : alert.status === 'Pending' ? 'destructive' : 'default'
+                                            }>
+                                            {alert.status}
+                                            </Badge>
+                                        </TableCell>
+                                    </TableRow>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-xl">
+                                    <DialogHeader>
+                                        <DialogTitle>SOS Alert from {alert.userName}</DialogTitle>
+                                    </DialogHeader>
+                                    <SosAlertDetails alert={alert} />
+                                </DialogContent>
+                            </Dialog>
                         ))}
                         </TableBody>
                     </Table>

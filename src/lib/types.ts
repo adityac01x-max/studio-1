@@ -25,4 +25,6 @@ export type SOSAlert = {
   time: Date;
   userName: string;
   status: 'Pending' | 'Resolved' | 'In Progress';
+  resolution?: string;
+  caseId?: string;
 };
