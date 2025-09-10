@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -34,7 +35,7 @@ import { Chatbot } from '@/components/chatbot';
 const touristNavItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/itinerary-planner', label: 'Itinerary Planner', icon: ListChecks },
-  { href: '/location/mumbai', label: 'Location Explorer', icon: Map },
+  { href: '/location', label: 'Location Explorer', icon: Map },
 ];
 
 const adminNavItems = [
@@ -58,7 +59,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <SidebarMenuItem key={item.href}>
               <Link href={item.href} passHref legacyBehavior>
                 <SidebarMenuButton
-                  isActive={pathname === item.href}
+                  isActive={pathname.startsWith(item.href)}
                   tooltip={{ children: item.label }}
                 >
                   <item.icon />
