@@ -1,3 +1,53 @@
+
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-1",
+      "description": "A stunning view of the Taj Mahal at sunrise.",
+      "imageUrl": "https://picsum.photos/seed/tajmahal/1200/800",
+      "imageHint": "taj mahal"
+    },
+    {
+      "id": "location-1",
+      "description": "Bustling street market in Delhi.",
+      "imageUrl": "https://picsum.photos/seed/delhi/600/400",
+      "imageHint": "delhi market"
+    },
+    {
+      "id": "location-2",
+      "description": "Houseboats on the backwaters of Kerala.",
+      "imageUrl": "https://picsum.photos/seed/kerala/600/400",
+      "imageHint": "kerala backwaters"
+    },
+    {
+      "id": "location-3",
+      "description": "Ganges river in Varanasi at dusk.",
+      "imageUrl": "https://picsum.photos/seed/varanasi/600/400",
+      "imageHint": "varanasi ganges"
+    },
+    {
+      "id": "location-4",
+      "description": "Camel safari in the Thar Desert, Rajasthan.",
+      "imageUrl": "https://picsum.photos/seed/rajasthan/600/400",
+      "imageHint": "rajasthan desert"
+    },
+    {
+      "id": "location-5",
+      "description": "Tea plantations in Munnar.",
+      "imageUrl": "https://picsum.photos/seed/munnar/600/400",
+      "imageHint": "tea plantation"
+    },
+    {
+      "id": "location-6",
+      "description": "Gateway of India in Mumbai.",
+      "imageUrl": "https://picsum.photos/seed/mumbai/600/400",
+      "imageHint": "mumbai gateway"
+    },
+    {
+      "id": "landing-hero",
+      "description": "A vibrant Indian landscape.",
+      "imageUrl": "https://picsum.photos/seed/bharat/1800/1200",
+      "imageHint": "indian landscape"
+    }
+  ]
 }
