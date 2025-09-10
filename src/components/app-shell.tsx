@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard,
   Map,
@@ -23,7 +23,6 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarInset,
-  SidebarFooter,
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -45,8 +44,17 @@ const adminNavItems = [
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = React.useState('');
   const isAdmin = pathname.startsWith('/admin') || pathname.startsWith('/enlist-agency');
   const navItems = isAdmin ? adminNavItems : touristNavItems;
+
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/location/${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   const sidebarContent = (
     <>
@@ -104,12 +112,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </div>
 
             <div className="w-full flex-1">
-              <form>
+              <form onSubmit={handleSearchSubmit}>
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
                     className="w-full appearance-none bg-background pl-9 md:w-2/3 lg:w-1/3"
                     placeholder="Search locations..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
               </form>
