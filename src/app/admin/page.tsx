@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
@@ -22,6 +23,7 @@ import type { SOSAlert } from '@/lib/types';
 import { format } from 'date-fns';
 import { AppShell } from '@/components/app-shell';
 import { BellRing, TrendingUp, MapPin } from 'lucide-react';
+import Link from 'next/link';
 
 const mockAlerts: SOSAlert[] = [
   { id: '1', userName: 'Anjali Sharma', location: 'Goa', time: new Date('2024-08-10T14:30:00'), status: 'Pending' },
@@ -98,7 +100,7 @@ export default function AdminPage() {
         <Card>
             <CardHeader>
                 <CardTitle className="flex items-center gap-2"><MapPin/> Popular Destinations</CardTitle>
-                <CardDescription>Analytics based on tourist activity.</CardDescription>
+                <CardDescription>Analytics based on tourist activity. Select a location to view details.</CardDescription>
             </CardHeader>
             <CardContent>
                 <Table>
@@ -113,7 +115,11 @@ export default function AdminPage() {
                     <TableBody>
                         {mockDestinationData.sort((a,b) => b.trips - a.trips).map(dest => (
                             <TableRow key={dest.location}>
-                                <TableCell className="font-medium">{dest.location}</TableCell>
+                                <TableCell className="font-medium">
+                                    <Link href={`/admin/location/${encodeURIComponent(dest.location)}`} className="hover:underline text-primary">
+                                        {dest.location}
+                                    </Link>
+                                </TableCell>
                                 <TableCell className="text-right">{dest.trips}</TableCell>
                                 <TableCell className="text-right">{dest.itineraries}</TableCell>
                                 <TableCell className="text-right">{dest.sos}</TableCell>
