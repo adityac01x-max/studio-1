@@ -25,6 +25,13 @@ export default function LoginPage() {
                     <ArrowRight className="ml-auto" />
                 </Link>
             </Button>
+            <Button asChild className="w-full" size="lg" variant="secondary">
+                <Link href="/agency/dashboard">
+                    <Building2 className="mr-2"/>
+                    Login as an Agency
+                    <ArrowRight className="ml-auto" />
+                </Link>
+            </Button>
             <Button asChild className="w-full" variant="outline" size="lg">
                 <Link href="/admin">
                     <Shield className="mr-2"/>
@@ -34,6 +41,14 @@ export default function LoginPage() {
             </Button>
         </CardContent>
       </Card>
+      <div className="mt-6 text-center">
+        <p className="text-muted-foreground">
+          Want to partner with us?{' '}
+          <Link href="/enlist-agency" className="text-primary hover:underline font-semibold">
+            Enlist your agency
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

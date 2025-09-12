@@ -102,7 +102,7 @@ export function SosAlertDetails({ alert }: SosAlertDetailsProps) {
                         <SelectContent>
                         <SelectItem value="Pending">Pending</SelectItem>
                         <SelectItem value="In Progress">In Progress</SelectItem>
-                        <SelectItem value="Resolved">Resolved</SelectItem>
+                        <SelectItem value="Resolved">Resolved</solute>
                         </SelectContent>
                     </Select>
                     <FormMessage />

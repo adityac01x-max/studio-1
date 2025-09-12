@@ -41,5 +41,3 @@ export type SOSAlert = {
   resolution?: string;
   caseId?: string;
 };
-
-    

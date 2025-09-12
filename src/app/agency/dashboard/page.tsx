@@ -72,7 +72,7 @@ export default function AgencyDashboardPage() {
               <DialogHeader>
                 <DialogTitle>Add a New Trip</DialogTitle>
               </DialogHeader>
-              <TripForm />
+              <TripForm setDialogOpen={() => {}} />
             </DialogContent>
           </Dialog>
         </div>
