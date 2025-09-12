@@ -94,8 +94,8 @@ export default function AdminPage() {
             </Card>
              <Card>
                 <CardHeader>
-                    <CardTitle>New Agencies</CardTitle>
-                    <CardDescription>5 this month</CardDescription>
+                    <CardTitle>Total Itinerary Requests</CardTitle>
+                    <CardDescription>635</CardDescription>
                 </CardHeader>
             </Card>
         </div>

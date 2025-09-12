@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import * as React from 'react';
@@ -9,7 +10,6 @@ import {
   Map,
   ListChecks,
   Shield,
-  Building2,
   Menu,
   Search,
   LogOut,
@@ -41,11 +41,6 @@ const touristNavItems = [
 
 const adminNavItems = [
   { href: '/admin', label: 'Admin Panel', icon: Shield },
-  { href: '/enlist-agency', label: 'Enlist Agency', icon: Building2 },
-];
-
-const agencyNavItems = [
-    { href: '/agency/dashboard', label: 'Dashboard', icon: LayoutDashboard },
 ];
 
 
@@ -53,12 +48,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = React.useState('');
-  const isAdmin = pathname.startsWith('/admin') || pathname.startsWith('/enlist-agency');
-  const isAgency = pathname.startsWith('/agency');
+  const isAdmin = pathname.startsWith('/admin');
 
   const getNavItems = () => {
     if (isAdmin) return adminNavItems;
-    if (isAgency) return agencyNavItems;
     return touristNavItems;
   }
   const navItems = getNavItems();
@@ -79,7 +72,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <SidebarMenu>
           {navItems.map((item) => (
             <SidebarMenuItem key={item.href}>
-              <Link href={item.href} passHref>
+              <Link href={item.href}>
                 <SidebarMenuButton
                   isActive={pathname.startsWith(item.href)}
                   tooltip={{ children: item.label }}
@@ -94,7 +87,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </SidebarContent>
        <SidebarFooter>
         <SidebarMenuItem>
-          <Link href="/login" passHref>
+          <Link href="/login">
             <SidebarMenuButton tooltip={{ children: 'Logout' }}>
               <LogOut />
               <span>Logout</span>
@@ -142,8 +135,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </header>
           <main className="flex-1 p-4 md:p-6">{children}</main>
         </SidebarInset>
-        {!isAdmin && !isAgency && <SosButton />}
-        {!isAdmin && !isAgency && <Chatbot />}
+        {!isAdmin && <SosButton />}
+        {!isAdmin && <Chatbot />}
       </div>
     </SidebarProvider>
   );

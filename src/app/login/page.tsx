@@ -1,4 +1,5 @@
 
+
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -21,13 +22,6 @@ export default function LoginPage() {
                 <Link href="/dashboard">
                     <User className="mr-2"/>
                     Login as a Tourist
-                    <ArrowRight className="ml-auto" />
-                </Link>
-            </Button>
-            <Button asChild className="w-full" variant="outline" size="lg">
-                <Link href="/agency/dashboard">
-                    <Building2 className="mr-2"/>
-                    Login as an Agency
                     <ArrowRight className="ml-auto" />
                 </Link>
             </Button>
