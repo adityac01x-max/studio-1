@@ -104,7 +104,7 @@ export default function AgencyDashboardPage() {
                     <DollarSign/>
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">Rs. 8,50,000</div>
+                    <div className="text-2xl font-bold">₹8,50,000</div>
                      <p className="text-xs text-muted-foreground">+8% from last month</p>
                 </CardContent>
             </Card>

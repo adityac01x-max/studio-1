@@ -22,7 +22,7 @@ const mockBuses = [
         arrival: '06:00',
         duration: '10h 00m',
         platform: 'RedBus',
-        price: 'Rs. 1,200',
+        price: '₹1,200',
         url: 'https://www.redbus.in/',
     },
     {
@@ -32,7 +32,7 @@ const mockBuses = [
         arrival: '06:00',
         duration: '10h 00m',
         platform: 'AbhiBus',
-        price: 'Rs. 1,250',
+        price: '₹1,250',
         url: 'https://www.abhibus.com/',
     },
     {
@@ -42,7 +42,7 @@ const mockBuses = [
         arrival: '07:30',
         duration: '10h 00m',
         platform: 'Paytm',
-        price: 'Rs. 950',
+        price: '₹950',
         url: 'https://paytm.com/bus-tickets',
     },
      {
@@ -52,7 +52,7 @@ const mockBuses = [
         arrival: '07:30',
         duration: '10h 00m',
         platform: 'RedBus',
-        price: 'Rs. 980',
+        price: '₹980',
         url: 'https://www.redbus.in/',
     },
 ];

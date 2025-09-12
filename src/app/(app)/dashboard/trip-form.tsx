@@ -267,7 +267,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                   name="travelCost"
                   render={({ field }) => (
                       <FormItem>
-                      <FormLabel>Travel Cost (Rs.)</FormLabel>
+                      <FormLabel>Travel Cost (₹)</FormLabel>
                       <FormControl>
                           <Input type="number" placeholder="e.g., 8000" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
                       </FormControl>
@@ -349,7 +349,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                                 name={`dailyDetails.${index}.cost`}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Day's Cost (Rs.)</FormLabel>
+                                        <FormLabel>Day's Cost (₹)</FormLabel>
                                         <FormControl>
                                             <Input type="number" placeholder="e.g., 5000" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
                                         </FormControl>
@@ -394,7 +394,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                     name="totalCost"
                     render={({ field }) => (
                         <FormItem>
-                        <FormLabel>Total Trip Cost (Rs.)</FormLabel>
+                        <FormLabel>Total Trip Cost (₹)</FormLabel>
                         <FormControl>
                             <Input type="number" placeholder="e.g., 50000" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
                         </FormControl>

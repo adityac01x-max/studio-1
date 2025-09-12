@@ -19,7 +19,7 @@ const mockAccommodations = [
     {
         name: 'The Taj Mahal Palace',
         platform: 'MakeMyTrip',
-        price: 'Rs. 25,000',
+        price: '₹25,000',
         rating: 4.8,
         imageUrl: `https://picsum.photos/seed/taj-palace/200/150`,
         imageHint: 'luxury hotel',
@@ -28,7 +28,7 @@ const mockAccommodations = [
     {
         name: 'The Taj Mahal Palace',
         platform: 'Goibibo',
-        price: 'Rs. 24,500',
+        price: '₹24,500',
         rating: 4.8,
         imageUrl: `https://picsum.photos/seed/taj-palace/200/150`,
         imageHint: 'luxury hotel',
@@ -37,7 +37,7 @@ const mockAccommodations = [
     {
         name: 'The Taj Mahal Palace',
         platform: 'Booking.com',
-        price: 'Rs. 26,000',
+        price: '₹26,000',
         rating: 4.8,
         imageUrl: `https://picsum.photos/seed/taj-palace/200/150`,
         imageHint: 'luxury hotel',
@@ -46,7 +46,7 @@ const mockAccommodations = [
      {
         name: 'Vivanta Goa',
         platform: 'MakeMyTrip',
-        price: 'Rs. 18,000',
+        price: '₹18,000',
         rating: 4.5,
         imageUrl: `https://picsum.photos/seed/vivanta-goa/200/150`,
         imageHint: 'beach resort',
@@ -55,7 +55,7 @@ const mockAccommodations = [
     {
         name: 'Vivanta Goa',
         platform: 'Goibibo',
-        price: 'Rs. 18,500',
+        price: '₹18,500',
         rating: 4.5,
         imageUrl: `https://picsum.photos/seed/vivanta-goa/200/150`,
         imageHint: 'beach resort',
