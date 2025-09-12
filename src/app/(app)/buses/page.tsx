@@ -23,7 +23,7 @@ const mockBuses = [
         duration: '10h 00m',
         platform: 'RedBus',
         price: '₹1,200',
-        url: '#',
+        url: 'https://www.redbus.in/',
     },
     {
         operator: 'VRL Travels',
@@ -33,7 +33,7 @@ const mockBuses = [
         duration: '10h 00m',
         platform: 'AbhiBus',
         price: '₹1,250',
-        url: '#',
+        url: 'https://www.abhibus.com/',
     },
     {
         operator: 'Zingbus',
@@ -43,7 +43,7 @@ const mockBuses = [
         duration: '10h 00m',
         platform: 'Paytm',
         price: '₹950',
-        url: '#',
+        url: 'https://paytm.com/bus-tickets',
     },
      {
         operator: 'Zingbus',
@@ -53,7 +53,7 @@ const mockBuses = [
         duration: '10h 00m',
         platform: 'RedBus',
         price: '₹980',
-        url: '#',
+        url: 'https://www.redbus.in/',
     },
 ];
 

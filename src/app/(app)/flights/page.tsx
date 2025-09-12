@@ -23,7 +23,7 @@ const mockFlights = [
         duration: '2h 15m',
         platform: 'MakeMyTrip',
         price: '₹5,500',
-        url: '#',
+        url: 'https://www.makemytrip.com/flights/',
     },
     {
         airline: 'IndiGo',
@@ -33,7 +33,7 @@ const mockFlights = [
         duration: '2h 15m',
         platform: 'EaseMyTrip',
         price: '₹5,450',
-        url: '#',
+        url: 'https://www.easemytrip.com/',
     },
     {
         airline: 'Vistara',
@@ -43,7 +43,7 @@ const mockFlights = [
         duration: '2h 05m',
         platform: 'Goibibo',
         price: '₹6,200',
-        url: '#',
+        url: 'https://www.goibibo.com/flights/',
     },
      {
         airline: 'Vistara',
@@ -53,7 +53,7 @@ const mockFlights = [
         duration: '2h 05m',
         platform: 'Vistara Official',
         price: '₹6,150',
-        url: '#',
+        url: 'https://www.airvistara.com/',
     },
 ];
 

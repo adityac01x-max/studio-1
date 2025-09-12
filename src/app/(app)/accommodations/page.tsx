@@ -23,7 +23,7 @@ const mockAccommodations = [
         rating: 4.8,
         imageUrl: `https://picsum.photos/seed/taj-palace/200/150`,
         imageHint: 'luxury hotel',
-        url: '#',
+        url: 'https://www.makemytrip.com/hotels/',
     },
     {
         name: 'The Taj Mahal Palace',
@@ -32,7 +32,7 @@ const mockAccommodations = [
         rating: 4.8,
         imageUrl: `https://picsum.photos/seed/taj-palace/200/150`,
         imageHint: 'luxury hotel',
-        url: '#',
+        url: 'https://www.goibibo.com/hotels/',
     },
     {
         name: 'The Taj Mahal Palace',
@@ -41,7 +41,7 @@ const mockAccommodations = [
         rating: 4.8,
         imageUrl: `https://picsum.photos/seed/taj-palace/200/150`,
         imageHint: 'luxury hotel',
-        url: '#',
+        url: 'https://www.booking.com/',
     },
      {
         name: 'Vivanta Goa',
@@ -50,7 +50,7 @@ const mockAccommodations = [
         rating: 4.5,
         imageUrl: `https://picsum.photos/seed/vivanta-goa/200/150`,
         imageHint: 'beach resort',
-        url: '#',
+        url: 'https://www.makemytrip.com/hotels/',
     },
     {
         name: 'Vivanta Goa',
@@ -59,7 +59,7 @@ const mockAccommodations = [
         rating: 4.5,
         imageUrl: `https://picsum.photos/seed/vivanta-goa/200/150`,
         imageHint: 'beach resort',
-        url: '#',
+        url: 'https://www.goibibo.com/hotels/',
     },
 ];
 

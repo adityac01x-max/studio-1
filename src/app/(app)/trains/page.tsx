@@ -23,7 +23,7 @@ const mockTrains = [
         duration: '15h 32m',
         platform: 'IRCTC Official',
         price: '₹3,500',
-        url: '#',
+        url: 'https://www.irctc.co.in/',
     },
     {
         trainName: 'Mumbai Rajdhani',
@@ -33,7 +33,7 @@ const mockTrains = [
         duration: '15h 32m',
         platform: 'RailYatri',
         price: '₹3,550',
-        url: '#',
+        url: 'https://www.railyatri.in/',
     },
     {
         trainName: 'Golden Temple Mail',
@@ -43,7 +43,7 @@ const mockTrains = [
         duration: '21h 25m',
         platform: 'IRCTC Official',
         price: '₹950',
-        url: '#',
+        url: 'https://www.irctc.co.in/',
     },
      {
         trainName: 'Golden Temple Mail',
@@ -53,7 +53,7 @@ const mockTrains = [
         duration: '21h 25m',
         platform: 'MakeMyTrip',
         price: '₹1,000',
-        url: '#',
+        url: 'https://www.makemytrip.com/railways/',
     },
 ];
 
