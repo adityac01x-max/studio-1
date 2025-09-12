@@ -53,8 +53,10 @@ const bookingNavItems = [
 ];
 
 const agencyNavItems = [
-  { href: '/agency/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/agency/dashboard', label: 'Agency Dashboard', icon: LayoutDashboard },
   { href: '/agency/accommodations', label: 'Manage Accommodations', icon: Hotel },
+  { href: '/itinerary-planner', label: 'Itinerary Planner', icon: ListChecks },
+  { href: '/location', label: 'Location Explorer', icon: Map },
 ];
 
 const adminNavItems = [
@@ -71,7 +73,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   const getNavItems = () => {
     if (isAdmin) return { primary: adminNavItems, secondary: [] };
-    if (isAgency) return { primary: agencyNavItems, secondary: [] };
+    if (isAgency) return { primary: agencyNavItems, secondary: bookingNavItems };
     return { primary: touristNavItems, secondary: bookingNavItems };
   }
   const navItems = getNavItems();
