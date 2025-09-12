@@ -128,7 +128,29 @@ export function TripForm() {
                     <FormField control={form.control} name="numberOfDays" render={({ field }) => ( <FormItem> <FormLabel>Number of Days</FormLabel> <FormControl> <Input type="number" min="1" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} /> </FormControl> <FormMessage /> </FormItem> )}/>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                     <FormField control={form.control} name="mode" render={({ field }) => ( <FormItem> <FormLabel>Mode of Transport</FormLabel> <Select onValueChange={field.onChange} defaultValue={field.value}> <FormControl> <SelectTrigger> <SelectValue placeholder="Select a mode of transport" /> </SelectTrigger> </FormControl> <SelectContent> <SelectItem value="flight">Flight</SelectItem> <SelectItem value="train">Train</SelectItem> <SelectItem value="bus">Bus</SelectItem> <SelectItem value="car">Car</SelectItem> </SelectContent> </Select> <FormMessage /> </FormItem> )}/>
+                     <FormField
+                        control={form.control}
+                        name="mode"
+                        render={({ field }) => (
+                            <FormItem>
+                            <FormLabel>Mode of Transport</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Select a mode of transport" />
+                                </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                <SelectItem value="flight">Flight</SelectItem>
+                                <SelectItem value="train">Train</SelectItem>
+                                <SelectItem value="bus">Bus</SelectItem>
+                                <SelectItem value="car">Car</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                        />
                      <FormField control={form.control} name="modeOfTravelCost" render={({ field }) => ( <FormItem> <FormLabel>Travel Cost (₹)</FormLabel> <FormControl> <Input type="number" placeholder="e.g., 5000" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} /> </FormControl> <FormMessage /> </FormItem> )}/>
                 </div>
                 <FormField control={form.control} name="travelers" render={({ field }) => ( <FormItem> <FormLabel>Accompanying Travelers</FormLabel> <FormControl> <Input placeholder="e.g., Anjali, Rohan (comma-separated)" {...field} /> </FormControl> <FormMessage /> </FormItem> )}/>
