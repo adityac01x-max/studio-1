@@ -13,7 +13,6 @@ import {
   Menu,
   Search,
   LogOut,
-  SidebarFooter,
 } from 'lucide-react';
 import {
   SidebarProvider,
@@ -24,6 +23,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarInset,
+  SidebarFooter,
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
