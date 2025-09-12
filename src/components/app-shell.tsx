@@ -44,12 +44,24 @@ const adminNavItems = [
   { href: '/enlist-agency', label: 'Enlist Agency', icon: Building2 },
 ];
 
+const agencyNavItems = [
+    { href: '/agency/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+];
+
+
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = React.useState('');
   const isAdmin = pathname.startsWith('/admin') || pathname.startsWith('/enlist-agency');
-  const navItems = isAdmin ? adminNavItems : touristNavItems;
+  const isAgency = pathname.startsWith('/agency');
+
+  const getNavItems = () => {
+    if (isAdmin) return adminNavItems;
+    if (isAgency) return agencyNavItems;
+    return touristNavItems;
+  }
+  const navItems = getNavItems();
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -130,8 +142,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </header>
           <main className="flex-1 p-4 md:p-6">{children}</main>
         </SidebarInset>
-        {!isAdmin && <SosButton />}
-        {!isAdmin && <Chatbot />}
+        {!isAdmin && !isAgency && <SosButton />}
+        {!isAdmin && !isAgency && <Chatbot />}
       </div>
     </SidebarProvider>
   );
