@@ -17,6 +17,7 @@ import {
   Plane,
   Train,
   Bus,
+  Hotel,
 } from 'lucide-react';
 import {
   SidebarProvider,
@@ -51,6 +52,11 @@ const bookingNavItems = [
     { href: '/buses', label: 'Buses', icon: Bus },
 ];
 
+const agencyNavItems = [
+  { href: '/agency/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/agency/accommodations', label: 'Manage Accommodations', icon: Hotel },
+];
+
 const adminNavItems = [
   { href: '/admin', label: 'Admin Panel', icon: Shield },
 ];
@@ -60,10 +66,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = React.useState('');
+  const isAgency = pathname.startsWith('/agency');
   const isAdmin = pathname.startsWith('/admin');
 
   const getNavItems = () => {
     if (isAdmin) return { primary: adminNavItems, secondary: [] };
+    if (isAgency) return { primary: agencyNavItems, secondary: [] };
     return { primary: touristNavItems, secondary: bookingNavItems };
   }
   const navItems = getNavItems();
@@ -96,7 +104,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
-        {!isAdmin && (
+        {navItems.secondary.length > 0 && (
              <SidebarMenu>
                 <Separator className="my-2"/>
                  {navItems.secondary.map((item) => (
@@ -165,8 +173,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </header>
           <main className="flex-1 p-4 md:p-6">{children}</main>
         </SidebarInset>
-        {!isAdmin && <SosButton />}
-        {!isAdmin && <Chatbot />}
+        {!isAdmin && !isAgency && <SosButton />}
+        {!isAdmin && !isAgency && <Chatbot />}
       </div>
     </SidebarProvider>
   );
