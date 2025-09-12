@@ -25,6 +25,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useState, useEffect } from 'react';
 import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
+import type { Trip } from '@/lib/types';
+
 
 const dailyDetailSchema = z.object({
   date: z.date(),
@@ -43,20 +45,33 @@ const tripSchema = z.object({
   totalCost: z.number().optional(),
   dailyDetails: z.array(dailyDetailSchema).optional(),
   media: z.any().optional(),
+  travelers: z.string().min(1, 'At least one traveler is required.'),
 });
 
 type TripFormValues = z.infer<typeof tripSchema>;
 
-export function TripForm() {
+type TripFormProps = {
+  tripToEdit?: Trip | null;
+  setDialogOpen: (open: boolean) => void;
+};
+
+
+export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
 
   const form = useForm<TripFormValues>({
     resolver: zodResolver(tripSchema),
-    defaultValues: {
+    defaultValues: tripToEdit ? {
+        ...tripToEdit,
+        startDate: tripToEdit.startTime,
+        endDate: tripToEdit.dailyDetails?.[tripToEdit.dailyDetails.length - 1]?.date || tripToEdit.startTime,
+        travelers: tripToEdit.travelers.join(', '),
+    } : {
       origin: '',
       destination: '',
       dailyDetails: [],
+      travelers: '',
     },
   });
   
@@ -72,6 +87,7 @@ export function TripForm() {
     if (startDate && endDate && endDate >= startDate) {
       const days = differenceInDays(endDate, startDate) + 1;
       const currentDays = fields.length;
+
       if (days > currentDays) {
         for (let i = currentDays; i < days; i++) {
           append({ date: addDays(startDate, i) });
@@ -82,7 +98,6 @@ export function TripForm() {
         }
       }
     } else if (fields.length > 0) {
-        // Clear if dates are invalid
         for (let i = fields.length - 1; i >= 0; i--) {
           remove(i);
         }
@@ -92,7 +107,7 @@ export function TripForm() {
 
   async function processNext() {
       const isValid = await form.trigger(
-          currentStep === 0 ? ['origin', 'destination', 'startDate', 'endDate', 'mode'] : []
+          currentStep === 0 ? ['origin', 'destination', 'startDate', 'endDate', 'mode', 'travelers'] : []
       );
       if (isValid) {
           setCurrentStep(prev => prev + 1);
@@ -103,12 +118,14 @@ export function TripForm() {
     console.log(values);
     // In a real app, this would be a server action.
     toast({
-      title: 'Trip Added!',
+      title: tripToEdit ? 'Trip Updated!' : 'Trip Added!',
       description: `Your trip from ${values.origin} to ${values.destination} has been saved.`,
     });
+    setDialogOpen(false);
   }
 
   return (
+    <div className="max-h-[70vh] overflow-y-auto pr-4">
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         {currentStep === 0 && (
@@ -243,6 +260,20 @@ export function TripForm() {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="travelers"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Travelers</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g., Anjali, Rohan" {...field} />
+                  </FormControl>
+                   <FormDescription>Comma-separated list of traveler names.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
         )}
 
@@ -359,7 +390,7 @@ export function TripForm() {
             </div>
         )}
         
-        <div className="flex justify-between">
+        <div className="flex justify-between sticky bottom-0 bg-background py-4">
             {currentStep > 0 && (
                 <Button type="button" variant="outline" onClick={() => setCurrentStep(prev => prev - 1)}>
                     Back
@@ -371,11 +402,12 @@ export function TripForm() {
                 </Button>
             ) : (
                 <Button type="submit" className="ml-auto">
-                    Save Trip
+                    {tripToEdit ? 'Save Changes' : 'Save Trip'}
                 </Button>
             )}
         </div>
       </form>
     </Form>
+    </div>
   );
 }

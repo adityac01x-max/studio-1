@@ -1,3 +1,12 @@
+
+export type DailyDetail = {
+  date: Date;
+  accommodation?: string;
+  placesVisited?: string;
+  notes?: string;
+  cost?: number;
+};
+
 export type Trip = {
   id: string;
   tripNumber: string;
@@ -17,6 +26,9 @@ export type Trip = {
     review: string;
   }[];
   tripExperience?: string;
+  dailyDetails?: DailyDetail[];
+  totalCost?: number;
+  media?: any[];
 };
 
 export type SOSAlert = {

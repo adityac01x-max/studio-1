@@ -1,3 +1,7 @@
+
+'use client';
+
+import { useState } from 'react';
 import { PlusCircle, MoreHorizontal, Car, Plane, Train, Bus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,6 +12,7 @@ import type { Trip } from '@/lib/types';
 import { TripForm } from './trip-form';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { format } from 'date-fns';
+import { TripDetails } from './trip-details';
 
 const mockTrips: Trip[] = [
   {
@@ -19,6 +24,15 @@ const mockTrips: Trip[] = [
     mode: 'flight',
     travelers: ['Anjali', 'Rohan'],
     status: 'Upcoming',
+    dailyDetails: [
+        {
+            date: new Date('2024-08-15'),
+            accommodation: "The Taj Palace",
+            placesVisited: "Gateway of India",
+            notes: "Great first day!",
+            cost: 5000,
+        }
+    ]
   },
   {
     id: '2',
@@ -29,6 +43,9 @@ const mockTrips: Trip[] = [
     mode: 'car',
     travelers: ['Priya'],
     status: 'Completed',
+    accommodation: { name: 'The Oberoi Amarvilas', type: 'Hotel' },
+    visitedPlaces: [{ name: 'Taj Mahal', rating: 5, review: 'Breathtaking!' }],
+    tripExperience: 'A truly memorable visit to the Taj Mahal.'
   },
   {
     id: '3',
@@ -59,6 +76,9 @@ const mockTrips: Trip[] = [
     mode: 'train',
     travelers: ['Karthik'],
     status: 'Completed',
+    accommodation: { name: 'Park Hyatt', type: 'Hotel' },
+    visitedPlaces: [{ name: 'Charminar', rating: 4, review: 'Historic and bustling.' }],
+    tripExperience: 'Enjoyed the Hyderabadi biryani.'
   },
 ];
 
@@ -70,6 +90,29 @@ const modeIcons = {
 }
 
 export default function DashboardPage() {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null);
+  const [isViewing, setIsViewing] = useState(false);
+
+  const handleAddClick = () => {
+    setSelectedTrip(null);
+    setIsViewing(false);
+    setDialogOpen(true);
+  }
+
+  const handleEditClick = (trip: Trip) => {
+    setSelectedTrip(trip);
+    setIsViewing(false);
+    setDialogOpen(true);
+  }
+
+  const handleViewClick = (trip: Trip) => {
+    setSelectedTrip(trip);
+    setIsViewing(true);
+    setDialogOpen(true);
+  }
+
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -77,20 +120,26 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-bold font-headline">My Trips</h1>
           <p className="text-muted-foreground">Manage and view your travel plans.</p>
         </div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>
-              <PlusCircle className="mr-2 h-4 w-4" /> Add Trip
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Add a New Trip</DialogTitle>
-            </DialogHeader>
-            <TripForm />
-          </DialogContent>
-        </Dialog>
+         <Button onClick={handleAddClick}>
+            <PlusCircle className="mr-2 h-4 w-4" /> Add Trip
+        </Button>
       </div>
+
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="sm:max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>
+                {isViewing ? `Trip to ${selectedTrip?.destination}`: selectedTrip ? 'Edit Trip' : 'Add a New Trip'}
+            </DialogTitle>
+          </DialogHeader>
+          {isViewing && selectedTrip ? (
+             <TripDetails trip={selectedTrip} />
+          ) : (
+             <TripForm tripToEdit={selectedTrip} setDialogOpen={setDialogOpen} />
+          )}
+        </DialogContent>
+      </Dialog>
+
 
       <Card>
         <CardHeader>
@@ -145,8 +194,8 @@ export default function DashboardPage() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>View Details</DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => handleEditClick(trip)}>Edit</DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => handleViewClick(trip)}>View Details</DropdownMenuItem>
                         <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -160,3 +209,4 @@ export default function DashboardPage() {
     </div>
   );
 }
+
