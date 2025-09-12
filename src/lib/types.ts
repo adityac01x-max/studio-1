@@ -27,6 +27,7 @@ export type Trip = {
   }[];
   tripExperience?: string;
   dailyDetails?: DailyDetail[];
+  travelCost?: number;
   totalCost?: number;
   media?: any[];
 };
@@ -40,3 +41,5 @@ export type SOSAlert = {
   resolution?: string;
   caseId?: string;
 };
+
+    

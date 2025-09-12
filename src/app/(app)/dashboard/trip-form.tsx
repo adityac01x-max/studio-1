@@ -42,6 +42,7 @@ const tripSchema = z.object({
   startDate: z.date({ required_error: 'A start date is required.' }),
   endDate: z.date({ required_error: 'An end date is required.' }),
   mode: z.enum(['flight', 'train', 'bus', 'car']),
+  travelCost: z.number().optional(),
   totalCost: z.number().optional(),
   dailyDetails: z.array(dailyDetailSchema).optional(),
   media: z.any().optional(),
@@ -237,29 +238,44 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                 )}
                 />
             </div>
-            <FormField
-              control={form.control}
-              name="mode"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Mode of Transport</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select mode of travel" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="flight">Flight</SelectItem>
-                      <SelectItem value="train">Train</SelectItem>
-                      <SelectItem value="bus">Bus</SelectItem>
-                      <SelectItem value="car">Car</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="mode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Mode of Transport</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select mode of travel" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="flight">Flight</SelectItem>
+                        <SelectItem value="train">Train</SelectItem>
+                        <SelectItem value="bus">Bus</SelectItem>
+                        <SelectItem value="car">Car</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                  control={form.control}
+                  name="travelCost"
+                  render={({ field }) => (
+                      <FormItem>
+                      <FormLabel>Travel Cost (₹)</FormLabel>
+                      <FormControl>
+                          <Input type="number" placeholder="e.g., 8000" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
+                      </FormControl>
+                      <FormMessage />
+                      </FormItem>
+                  )}
+              />
+            </div>
             <FormField
               control={form.control}
               name="travelers"
@@ -411,3 +427,5 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
     </div>
   );
 }
+
+    
