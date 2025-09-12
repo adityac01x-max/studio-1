@@ -19,13 +19,12 @@ import { useToast } from '@/hooks/use-toast';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { CalendarIcon, PlusCircle, Trash, Upload, VenetianMask } from 'lucide-react';
+import { CalendarIcon, Upload } from 'lucide-react';
 import { format, addDays, differenceInDays } from 'date-fns';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useState, useEffect } from 'react';
 import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 
 const dailyDetailSchema = z.object({
   date: z.date(),
@@ -380,5 +379,3 @@ export function TripForm() {
     </Form>
   );
 }
-
-    

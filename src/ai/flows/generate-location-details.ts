@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -53,11 +54,10 @@ const prompt = ai.definePrompt({
   name: 'generateLocationDetailsPrompt',
   input: {schema: GenerateLocationDetailsInputSchema},
   output: {schema: GenerateLocationDetailsOutputSchema},
-  prompt: `You are a travel expert for India. Generate detailed travel information for the following location: {{{location}}}.
+  prompt: `You are a travel expert specializing in destinations within India. Generate detailed travel information for the following location: {{{location}}}.
 
-  Provide a diverse and realistic set of data for accommodations, a 3-day weather forecast, recent news, and popular tourist places. Ensure all output fields are populated with high-quality, believable information.
-  All prices must be in Indian Rupees (₹).
-  For news URLs, provide real-looking but fake URLs from major Indian news sources.
+  Provide a diverse and realistic set of data. All prices must be in Indian Rupees (₹).
+  For news URLs, provide realistic but fake URLs from major Indian news sources.
   For accommodation platforms, use a variety of popular booking sites.
   For weather icons, choose from 'Sun', 'Cloud', 'CloudRain'.`,
 });
