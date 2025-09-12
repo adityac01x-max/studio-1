@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -183,7 +184,7 @@ type SidebarMenuButtonProps = Omit<ButtonProps, "children"> & {
 }
 
 const SidebarMenuButton = React.forwardRef<
-  React.ElementRef<"a">,
+  HTMLButtonElement,
   SidebarMenuButtonProps
 >(
   (
@@ -199,7 +200,7 @@ const SidebarMenuButton = React.forwardRef<
     const { isCollapsed } = useSidebar()
     return (
       <Button
-        ref={ref as any}
+        ref={ref}
         variant={variant}
         className={cn(
           "h-10 w-full justify-start",
