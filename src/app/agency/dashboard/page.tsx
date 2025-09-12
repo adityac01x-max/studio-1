@@ -1,4 +1,5 @@
 
+'use client';
 
 import { PlusCircle, MoreHorizontal, Car, Plane, Train, Bus, DollarSign, ListChecks, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -101,7 +102,7 @@ export default function AgencyDashboardPage() {
                 <PlusCircle className="mr-2 h-4 w-4" /> Add Trip
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-2xl">
               <DialogHeader>
                 <DialogTitle>Add a New Trip</DialogTitle>
               </DialogHeader>
@@ -170,7 +171,7 @@ export default function AgencyDashboardPage() {
                      <ChartContainer config={tripTypeChartConfig} className="h-64 w-full">
                         <BarChart accessibilityLayer data={tripTypeData} layout="vertical">
                             <CartesianGrid horizontal={false} />
-                            <YAxis dataKey="type" type="category" tickLine={false} tickMargin={10} axisLine={false} />
+                            <YAxis dataKey="type" type="category" tickLine={false} tickMargin={10} axisLine={false} width={80}/>
                             <XAxis type="number" hide />
                             <ChartTooltip content={<ChartTooltipContent />} />
                             <Bar dataKey="count" fill="var(--color-count)" radius={4} />
