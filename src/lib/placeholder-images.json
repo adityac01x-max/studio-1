@@ -4,50 +4,50 @@
     {
       "id": "hero-1",
       "description": "A stunning view of the Taj Mahal at sunrise.",
-      "imageUrl": "https://picsum.photos/seed/tajmahal/1200/800",
+      "imageUrl": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1200&auto=format&fit=crop",
       "imageHint": "taj mahal"
     },
     {
       "id": "location-1",
-      "description": "Bustling street market in Delhi.",
-      "imageUrl": "https://picsum.photos/seed/delhi/600/400",
-      "imageHint": "delhi market"
+      "description": "Humayun's Tomb in Delhi.",
+      "imageUrl": "https://images.unsplash.com/photo-1557090495-5373a879d76b?q=80&w=600&auto=format&fit=crop",
+      "imageHint": "delhi monument"
     },
     {
       "id": "location-2",
       "description": "Houseboats on the backwaters of Kerala.",
-      "imageUrl": "https://picsum.photos/seed/kerala/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=600&auto=format&fit=crop",
       "imageHint": "kerala backwaters"
     },
     {
       "id": "location-3",
       "description": "Ganges river in Varanasi at dusk.",
-      "imageUrl": "https://picsum.photos/seed/varanasi/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1561361522-589635b45143?q=80&w=600&auto=format&fit=crop",
       "imageHint": "varanasi ganges"
     },
     {
       "id": "location-4",
-      "description": "Camel safari in the Thar Desert, Rajasthan.",
-      "imageUrl": "https://picsum.photos/seed/rajasthan/600/400",
-      "imageHint": "rajasthan desert"
+      "description": "Hawa Mahal in Jaipur, Rajasthan.",
+      "imageUrl": "https://images.unsplash.com/photo-1599661046223-e06588536348?q=80&w=600&auto=format&fit=crop",
+      "imageHint": "rajasthan palace"
     },
     {
       "id": "location-5",
       "description": "Tea plantations in Munnar.",
-      "imageUrl": "https://picsum.photos/seed/munnar/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1613665813446-82a78c468a1d?q=80&w=600&auto=format&fit=crop",
       "imageHint": "tea plantation"
     },
     {
       "id": "location-6",
       "description": "Gateway of India in Mumbai.",
-      "imageUrl": "https://picsum.photos/seed/mumbai/600/400",
+      "imageUrl": "https://images.unsplash.com/photo-1562979314-1ace4f26a711?q=80&w=600&auto=format&fit=crop",
       "imageHint": "mumbai gateway"
     },
     {
       "id": "landing-hero",
       "description": "A vibrant Indian landscape.",
-      "imageUrl": "https://picsum.photos/seed/bharat/1800/1200",
-      "imageHint": "indian landscape"
+      "imageUrl": "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1800&auto=format&fit=crop",
+      "imageHint": "indian landmark"
     }
   ]
 }
