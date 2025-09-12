@@ -1,7 +1,6 @@
-// src/ai/flows/suggest-travel-itinerary.ts
 'use server';
 /**
- * @fileOverview A travel itinerary suggestion AI agent.
+ * @fileOverview A travel itinerary suggestion AI agent for India.
  *
  * - suggestTravelItinerary - A function that handles the travel itinerary suggestion process.
  * - SuggestTravelItineraryInput - The input type for the suggestTravelItinerary function.
@@ -12,13 +11,13 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const SuggestTravelItineraryInputSchema = z.object({
-  location: z.string().describe('The location for which to suggest a travel itinerary.'),
-  preferences: z.string().describe('The user\u2019s preferences for the travel itinerary, such as interests, budget, and travel style.'),
+  location: z.string().describe('The location in India for which to suggest a travel itinerary.'),
+  preferences: z.string().describe('The user’s preferences for the travel itinerary, such as interests, budget in INR, and travel style.'),
 });
 export type SuggestTravelItineraryInput = z.infer<typeof SuggestTravelItineraryInputSchema>;
 
 const SuggestTravelItineraryOutputSchema = z.object({
-  itinerary: z.string().describe('A detailed travel itinerary suggestion based on the location and preferences.'),
+  itinerary: z.string().describe('A detailed travel itinerary suggestion based on the location and preferences, with all costs in Indian Rupees (₹).'),
 });
 export type SuggestTravelItineraryOutput = z.infer<typeof SuggestTravelItineraryOutputSchema>;
 
@@ -30,9 +29,10 @@ const prompt = ai.definePrompt({
   name: 'suggestTravelItineraryPrompt',
   input: {schema: SuggestTravelItineraryInputSchema},
   output: {schema: SuggestTravelItineraryOutputSchema},
-  prompt: `You are an expert travel agent specializing in creating personalized travel itineraries.
+  prompt: `You are an expert travel agent specializing in creating personalized travel itineraries for destinations within India.
 
 You will use the location and preferences provided to create a detailed travel itinerary suggestion.
+Ensure all mentioned costs or budget considerations are in Indian Rupees (₹).
 
 Location: {{{location}}}
 Preferences: {{{preferences}}}

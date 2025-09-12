@@ -66,7 +66,7 @@ export default function ItineraryPlannerPage() {
               <Label htmlFor="preferences">Preferences</Label>
               <Textarea
                 id="preferences"
-                placeholder="e.g., interested in beaches, historical sites, and local cuisine. Budget-friendly."
+                placeholder="e.g., interested in beaches, historical sites, and local cuisine. Budget of ₹20,000."
                 value={preferences}
                 onChange={(e) => setPreferences(e.target.value)}
               />
