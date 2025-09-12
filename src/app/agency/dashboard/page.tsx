@@ -1,4 +1,5 @@
 
+
 import { PlusCircle, MoreHorizontal, Car, Plane, Train, Bus, DollarSign, ListChecks, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,6 +11,8 @@ import { TripForm } from '@/app/(app)/dashboard/trip-form';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { format } from 'date-fns';
 import { AppShell } from '@/components/app-shell';
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
+import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartConfig } from '@/components/ui/chart';
 
 
 const mockTrips: Trip[] = [
@@ -44,6 +47,36 @@ const mockTrips: Trip[] = [
     status: 'Upcoming',
   },
 ];
+
+const bookingsData = [
+  { month: 'Jan', bookings: 12 },
+  { month: 'Feb', bookings: 15 },
+  { month: 'Mar', bookings: 22 },
+  { month: 'Apr', bookings: 18 },
+  { month: 'May', bookings: 25 },
+  { month: 'Jun', bookings: 20 },
+];
+
+const bookingsChartConfig: ChartConfig = {
+  bookings: {
+    label: 'Bookings',
+    color: 'hsl(var(--primary))',
+  },
+};
+
+const tripTypeData = [
+    { type: "Flight", count: 25 },
+    { type: "Train", count: 18 },
+    { type: "Bus", count: 12 },
+    { type: "Car", count: 23 },
+]
+
+const tripTypeChartConfig: ChartConfig = {
+    count: {
+        label: "Count",
+        color: "hsl(var(--secondary-foreground))",
+    }
+}
 
 const modeIcons = {
   flight: <Plane className="h-4 w-4" />,
@@ -106,6 +139,43 @@ export default function AgencyDashboardPage() {
                 <CardContent>
                     <div className="text-2xl font-bold">₹8,50,000</div>
                      <p className="text-xs text-muted-foreground">+8% from last month</p>
+                </CardContent>
+            </Card>
+        </div>
+        
+        <div className="grid gap-6 md:grid-cols-2">
+            <Card>
+                <CardHeader>
+                    <CardTitle>Bookings Per Month</CardTitle>
+                    <CardDescription>An overview of your monthly trip bookings.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                     <ChartContainer config={bookingsChartConfig} className="h-64 w-full">
+                        <BarChart accessibilityLayer data={bookingsData}>
+                            <CartesianGrid vertical={false} />
+                            <XAxis dataKey="month" tickLine={false} tickMargin={10} axisLine={false} />
+                            <YAxis />
+                            <ChartTooltip content={<ChartTooltipContent />} />
+                            <Bar dataKey="bookings" fill="var(--color-bookings)" radius={4} />
+                        </BarChart>
+                    </ChartContainer>
+                </CardContent>
+            </Card>
+             <Card>
+                <CardHeader>
+                    <CardTitle>Trip Type Distribution</CardTitle>
+                    <CardDescription>Breakdown of trips by transport mode.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                     <ChartContainer config={tripTypeChartConfig} className="h-64 w-full">
+                        <BarChart accessibilityLayer data={tripTypeData} layout="vertical">
+                            <CartesianGrid horizontal={false} />
+                            <YAxis dataKey="type" type="category" tickLine={false} tickMargin={10} axisLine={false} />
+                            <XAxis type="number" hide />
+                            <ChartTooltip content={<ChartTooltipContent />} />
+                            <Bar dataKey="count" fill="var(--color-count)" radius={4} />
+                        </BarChart>
+                    </ChartContainer>
                 </CardContent>
             </Card>
         </div>
