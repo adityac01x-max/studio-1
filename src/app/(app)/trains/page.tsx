@@ -22,7 +22,7 @@ const mockTrains = [
         arrival: '08:32',
         duration: '15h 32m',
         platform: 'IRCTC Official',
-        price: '₹3,500',
+        price: 'Rs. 3,500',
         url: 'https://www.irctc.co.in/',
     },
     {
@@ -32,7 +32,7 @@ const mockTrains = [
         arrival: '08:32',
         duration: '15h 32m',
         platform: 'RailYatri',
-        price: '₹3,550',
+        price: 'Rs. 3,550',
         url: 'https://www.railyatri.in/',
     },
     {
@@ -42,7 +42,7 @@ const mockTrains = [
         arrival: '05:05',
         duration: '21h 25m',
         platform: 'IRCTC Official',
-        price: '₹950',
+        price: 'Rs. 950',
         url: 'https://www.irctc.co.in/',
     },
      {
@@ -52,7 +52,7 @@ const mockTrains = [
         arrival: '05:05',
         duration: '21h 25m',
         platform: 'MakeMyTrip',
-        price: '₹1,000',
+        price: 'Rs. 1,000',
         url: 'https://www.makemytrip.com/railways/',
     },
 ];

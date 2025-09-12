@@ -22,7 +22,7 @@ const mockFlights = [
         arrival: '10:45',
         duration: '2h 15m',
         platform: 'MakeMyTrip',
-        price: '₹5,500',
+        price: 'Rs. 5,500',
         url: 'https://www.makemytrip.com/flights/',
     },
     {
@@ -32,7 +32,7 @@ const mockFlights = [
         arrival: '10:45',
         duration: '2h 15m',
         platform: 'EaseMyTrip',
-        price: '₹5,450',
+        price: 'Rs. 5,450',
         url: 'https://www.easemytrip.com/',
     },
     {
@@ -42,7 +42,7 @@ const mockFlights = [
         arrival: '11:20',
         duration: '2h 05m',
         platform: 'Goibibo',
-        price: '₹6,200',
+        price: 'Rs. 6,200',
         url: 'https://www.goibibo.com/flights/',
     },
      {
@@ -52,7 +52,7 @@ const mockFlights = [
         arrival: '11:20',
         duration: '2h 05m',
         platform: 'Vistara Official',
-        price: '₹6,150',
+        price: 'Rs. 6,150',
         url: 'https://www.airvistara.com/',
     },
 ];

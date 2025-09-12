@@ -18,7 +18,7 @@ const SuggestTravelItineraryInputSchema = z.object({
 export type SuggestTravelItineraryInput = z.infer<typeof SuggestTravelItineraryInputSchema>;
 
 const SuggestTravelItineraryOutputSchema = z.object({
-  itinerary: z.string().describe('A detailed travel itinerary suggestion based on the location and preferences, with all costs in Indian Rupees (₹).'),
+  itinerary: z.string().describe('A detailed travel itinerary suggestion based on the location and preferences, with all costs in Indian Rupees (Rs.).'),
 });
 export type SuggestTravelItineraryOutput = z.infer<typeof SuggestTravelItineraryOutputSchema>;
 
@@ -33,7 +33,7 @@ const prompt = ai.definePrompt({
   prompt: `You are an expert travel agent specializing in creating personalized travel itineraries for destinations within India.
 
 You will use the location and preferences provided to create a detailed travel itinerary suggestion.
-Ensure all mentioned costs or budget considerations are in Indian Rupees (₹).
+Ensure all mentioned costs or budget considerations are in Indian Rupees (Rs.).
 
 Location: {{{location}}}
 Preferences: {{{preferences}}}

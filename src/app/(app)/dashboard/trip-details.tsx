@@ -76,7 +76,7 @@ export function TripDetails({ trip }: TripDetailsProps) {
                             {day.accommodation && <p><span className='font-medium'>Stayed at:</span> {day.accommodation}</p>}
                             {day.placesVisited && <p><span className='font-medium'>Visited:</span> {day.placesVisited}</p>}
                             {day.notes && <p><span className='font-medium'>Notes:</span> <span className="italic text-muted-foreground">"{day.notes}"</span></p>}
-                            {day.cost && <p className="flex items-center gap-1"><span className='font-medium'>Cost:</span> ₹{day.cost}</p>}
+                            {day.cost && <p className="flex items-center gap-1"><span className='font-medium'>Cost:</span> Rs. {day.cost}</p>}
                         </div>
                         {index < trip.dailyDetails!.length - 1 && <Separator className="my-4" />}
                      </div>

@@ -23,7 +23,7 @@ const GenerateLocationDetailsOutputSchema = z.object({
     heroImageHint: z.string().describe("A two-word hint for generating a hero image, e.g., 'cityscape mumbai'"),
     accommodations: z.array(z.object({
         name: z.string().describe("Name of the accommodation."),
-        price: z.string().describe("Starting price per night, formatted with the Indian Rupee symbol (e.g., '₹25,000')."),
+        price: z.string().describe("Starting price per night, formatted with 'Rs. ' (e.g., 'Rs. 25,000')."),
         platform: z.string().describe("The platform where it can be booked (e.g., 'Booking.com')."),
         rating: z.number().min(1).max(5).describe("The user rating out of 5."),
     })).describe("A list of 3 diverse accommodation options."),
@@ -56,7 +56,7 @@ const prompt = ai.definePrompt({
   output: {schema: GenerateLocationDetailsOutputSchema},
   prompt: `You are a travel expert specializing in destinations within India. Generate detailed travel information for the following location: {{{location}}}.
 
-  Provide a diverse and realistic set of data. All prices must be in Indian Rupees (₹).
+  Provide a diverse and realistic set of data. All prices must be in Indian Rupees (Rs.).
   For news URLs, provide realistic but fake URLs from major Indian news sources.
   For accommodation platforms, use a variety of popular booking sites.
   For weather icons, choose from 'Sun', 'Cloud', 'CloudRain'.`,
