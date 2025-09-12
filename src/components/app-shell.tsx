@@ -13,6 +13,10 @@ import {
   Menu,
   Search,
   LogOut,
+  Building,
+  Plane,
+  Train,
+  Bus,
 } from 'lucide-react';
 import {
   SidebarProvider,
@@ -32,11 +36,19 @@ import { Logo } from '@/components/logo';
 import { SosButton } from '@/components/sos-button';
 import { Chatbot } from '@/components/chatbot';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { Separator } from './ui/separator';
 
 const touristNavItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/itinerary-planner', label: 'Itinerary Planner', icon: ListChecks },
   { href: '/location', label: 'Location Explorer', icon: Map },
+];
+
+const bookingNavItems = [
+    { href: '/accommodations', label: 'Accommodations', icon: Building },
+    { href: '/flights', label: 'Flights', icon: Plane },
+    { href: '/trains', label: 'Trains', icon: Train },
+    { href: '/buses', label: 'Buses', icon: Bus },
 ];
 
 const adminNavItems = [
@@ -51,8 +63,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const isAdmin = pathname.startsWith('/admin');
 
   const getNavItems = () => {
-    if (isAdmin) return adminNavItems;
-    return touristNavItems;
+    if (isAdmin) return { primary: adminNavItems, secondary: [] };
+    return { primary: touristNavItems, secondary: bookingNavItems };
   }
   const navItems = getNavItems();
 
@@ -70,7 +82,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
-          {navItems.map((item) => (
+          {navItems.primary.map((item) => (
             <SidebarMenuItem key={item.href}>
               <Link href={item.href}>
                 <SidebarMenuButton
@@ -84,6 +96,24 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
+        {!isAdmin && (
+             <SidebarMenu>
+                <Separator className="my-2"/>
+                 {navItems.secondary.map((item) => (
+                    <SidebarMenuItem key={item.href}>
+                    <Link href={item.href}>
+                        <SidebarMenuButton
+                        isActive={pathname.startsWith(item.href)}
+                        tooltip={{ children: item.label }}
+                        >
+                        <item.icon />
+                        <span>{item.label}</span>
+                        </SidebarMenuButton>
+                    </Link>
+                    </SidebarMenuItem>
+                ))}
+            </SidebarMenu>
+        )}
       </SidebarContent>
        <SidebarFooter>
         <SidebarMenuItem>
