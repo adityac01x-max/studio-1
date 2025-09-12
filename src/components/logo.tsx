@@ -6,7 +6,7 @@ export function Logo({ className }: { className?: string }) {
   return (
     <Link href="/" className={cn("flex items-center gap-2 text-xl font-bold font-headline text-primary", className)}>
       <Compass className="h-6 w-6" />
-      <span>Bharat Travel</span>
+      <span>Questify</span>
     </Link>
   );
 }

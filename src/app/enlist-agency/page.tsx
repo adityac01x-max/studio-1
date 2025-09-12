@@ -65,7 +65,7 @@ export default function EnlistAgencyPage() {
           <CardHeader>
             <CardTitle className="font-headline text-2xl">Enlist Your Travel Agency</CardTitle>
             <CardDescription>
-              Partner with Bharat Travel to reach a wider audience and manage your trips seamlessly.
+              Partner with Questify to reach a wider audience and manage your trips seamlessly.
             </CardDescription>
           </CardHeader>
           <CardContent>

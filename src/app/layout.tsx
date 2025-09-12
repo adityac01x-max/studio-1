@@ -1,10 +1,11 @@
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Bharat Travel',
-  description: 'Your guide to exploring India',
+  title: 'Questify',
+  description: 'Your guide to quests and adventures',
 };
 
 export default function RootLayout({

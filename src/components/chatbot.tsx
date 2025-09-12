@@ -82,7 +82,7 @@ export function Chatbot() {
         <SheetHeader className="p-6 pb-4 border-b">
           <SheetTitle className="flex items-center gap-2 font-headline">
             <Bot />
-            Bharat Travel Support
+            Questify Support
           </SheetTitle>
           <SheetDescription>
             Get help in your preferred language.

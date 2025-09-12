@@ -33,10 +33,10 @@ export default function Home() {
           </div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
             <h1 className="font-headline text-4xl md:text-6xl font-bold tracking-tight text-foreground">
-              Discover the Heart of India
+              Discover Your Next Adventure
             </h1>
             <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-foreground/80">
-              Your ultimate travel companion for exploring the vibrant culture, breathtaking landscapes, and hidden gems of Bharat.
+              Your ultimate travel companion for exploring vibrant cultures, breathtaking landscapes, and hidden gems around the world.
             </p>
             <div className="mt-8">
               <Button size="lg" asChild>
@@ -99,7 +99,7 @@ export default function Home() {
 
       <footer className="bg-secondary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-secondary-foreground">
-          <p>&copy; {new Date().getFullYear()} Bharat Travel. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Questify. All rights reserved.</p>
         </div>
       </footer>
     </div>
