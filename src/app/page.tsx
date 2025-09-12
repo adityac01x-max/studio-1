@@ -4,8 +4,11 @@ import Image from 'next/image';
 import { ArrowRight, Compass, Shield, Languages } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Logo } from '@/components/logo';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function Home() {
+  const heroImage = PlaceHolderImages.find(p => p.id === 'landing-hero');
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -19,12 +22,12 @@ export default function Home() {
         <section className="relative py-20 md:py-32 flex items-center">
           <div className="absolute inset-0">
             <Image
-              src="https://picsum.photos/seed/bharat/1800/1200"
+              src={heroImage?.imageUrl || "https://picsum.photos/seed/bharat/1800/1200"}
               alt="Indian Landscape"
               fill
               className="object-cover"
               priority
-              data-ai-hint="indian landscape"
+              data-ai-hint={heroImage?.imageHint}
             />
             <div className="absolute inset-0 bg-background/60 dark:bg-background/80" />
           </div>
