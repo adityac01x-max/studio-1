@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -22,7 +23,7 @@ const CompareAccommodationsOutputSchema = z.object({
   results: z.array(z.object({
       name: z.string().describe("The name of the accommodation."),
       rating: z.number().min(1).max(5).describe("The user rating out of 5."),
-      imageUrl: z.string().url().describe("A placeholder image URL for the accommodation from picsum.photos."),
+      imageUrl: z.string().url().describe("A realistic image URL for the accommodation from source.unsplash.com, based on the hotel type and location (e.g., https://source.unsplash.com/800x600/?luxury-hotel-mumbai)."),
       imageHint: z.string().describe("A two-word hint for generating an image, e.g., 'luxury hotel'"),
       platforms: z.array(z.object({
         platform: z.string().describe("The booking platform offering the price (e.g., 'MakeMyTrip', 'Booking.com')."),
@@ -48,7 +49,7 @@ const prompt = ai.definePrompt({
   
   - Ensure prices are realistic for the location and are in Indian Rupees (₹).
   - Provide a valid, but generic, booking URL for each platform.
-  - Generate a unique placeholder image URL from picsum.photos for each hotel, using a consistent seed for the same hotel (e.g., https://picsum.photos/seed/hotel-name/200/150).
+  - Generate a realistic image URL from source.unsplash.com for each hotel, using search terms relevant to the hotel and its location (e.g., https://source.unsplash.com/800x600/?luxury-hotel-mumbai).
   - Provide a short, two-word AI hint for the image.`,
 });
 
