@@ -73,4 +73,3 @@ const generateLocationDetailsFlow = ai.defineFlow(
     return output!;
   }
 );
-

@@ -287,6 +287,3 @@ function LocationSkeleton() {
         </div>
     );
 }
-
-
-    

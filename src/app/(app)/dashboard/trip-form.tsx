@@ -476,5 +476,3 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
     </div>
   );
 }
-
-    
