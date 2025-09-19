@@ -1,6 +1,6 @@
 
 .animation-container {
-  animation: pulse-fade 2.5s ease-in-out forwards;
+  animation: pulse-fade 1.5s ease-in-out forwards;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,4 +19,31 @@
     transform: scale(1);
     opacity: 0;
   }
+}
+
+/* Embla Carousel Styles */
+.embla {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+  height: 100%;
+}
+
+.embla__slide {
+  position: relative;
+  flex: 0 0 100%;
+  min-width: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+
+.embla__slide.is-active {
+  opacity: 1;
 }
