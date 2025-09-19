@@ -1,0 +1,22 @@
+
+.animation-container {
+  animation: pulse-fade 2.5s ease-in-out forwards;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes pulse-fade {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}

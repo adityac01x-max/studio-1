@@ -19,21 +19,21 @@ export default function LoginPage() {
         </CardHeader>
         <CardContent className="space-y-4">
             <Button asChild className="w-full" size="lg">
-                <Link href="/dashboard">
+                <Link href="/login-animation?role=tourist">
                     <User className="mr-2"/>
                     Login as a Tourist
                     <ArrowRight className="ml-auto" />
                 </Link>
             </Button>
             <Button asChild className="w-full" size="lg" variant="secondary">
-                <Link href="/agency/dashboard">
+                <Link href="/login-animation?role=agency">
                     <Building2 className="mr-2"/>
                     Login as an Agency
                     <ArrowRight className="ml-auto" />
                 </Link>
             </Button>
             <Button asChild className="w-full" variant="outline" size="lg">
-                <Link href="/admin">
+                <Link href="/login-animation?role=admin">
                     <Shield className="mr-2"/>
                     Login as an Admin
                     <ArrowRight className="ml-auto" />
