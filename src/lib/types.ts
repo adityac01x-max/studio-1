@@ -1,5 +1,11 @@
 
 
+export type TripPathPoint = {
+  latitude: number;
+  longitude: number;
+  timestamp: number;
+};
+
 export type DailyDetail = {
   date: Date;
   accommodation?: string;
@@ -18,7 +24,7 @@ export type Trip = {
   origin: string;
   destination: string;
   startTime: Date;
-  mode: 'flight' | 'train' | 'bus' | 'car';
+  mode: 'flight' | 'train' | 'bus' | 'car' | 'other' | 'walk' | 'bicycle';
   travelers: string[];
   status: 'Completed' | 'Upcoming' | 'In Progress';
   accommodation?: {
@@ -35,6 +41,7 @@ export type Trip = {
   travelCost?: number;
   totalCost?: number;
   media?: any[];
+  tripPath?: TripPathPoint[];
 };
 
 export type SOSAlert = {

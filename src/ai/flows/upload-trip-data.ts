@@ -11,6 +11,12 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
+const TripPathPointSchema = z.object({
+  latitude: z.number(),
+  longitude: z.number(),
+  timestamp: z.number(),
+});
+
 const UploadTripDataInputSchema = z.object({
   userId: z.string().describe('An anonymous, unique identifier for the user.'),
   origin: z.string().describe('The starting point of the trip.'),
@@ -18,6 +24,7 @@ const UploadTripDataInputSchema = z.object({
   startTime: z.string().datetime().describe('The start time of the trip in ISO 8601 format.'),
   endTime: z.string().datetime().describe('The end time of the trip in ISO 8601 format.'),
   mode: z.enum(['flight', 'train', 'bus', 'car', 'walk', 'bicycle', 'other']).describe('The mode of transport used.'),
+  tripPath: z.array(TripPathPointSchema).optional().describe('A series of geographic points recorded during the trip.'),
 });
 export type UploadTripDataInput = z.infer<typeof UploadTripDataInputSchema>;
 
