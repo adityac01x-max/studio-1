@@ -44,7 +44,7 @@ const prompt = ai.definePrompt({
   prompt: `You are a travel price comparison expert. A user is searching for accommodations based on the term '{{{searchTerm}}}' from {{{checkInDate}}} to {{{checkOutDate}}}.
 
   - If '{{{searchTerm}}}' seems to be a specific hotel name, find that hotel and generate price comparisons for it from 3-5 major platforms (e.g., Booking.com, Agoda, MakeMyTrip, Goibibo, Hotels.com).
-  - If '{{{searchTerm}}}' seems to be a city or location, generate a list of 5-8 realistic and popular hotel options in that area. For each hotel, provide price comparisons from 2-4 different platforms.
+  - If '{{{searchTerm}}}' seems to be a city or location, generate a list of 5-10 realistic and popular hotel options in that area. For each hotel, provide price comparisons from 2-4 different platforms.
   
   - Ensure prices are realistic for the location and are in Indian Rupees (₹).
   - Provide a valid, but generic, booking URL for each platform.
