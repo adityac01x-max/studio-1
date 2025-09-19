@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useForm, useFieldArray } from 'react-hook-form';
@@ -33,6 +34,9 @@ const dailyDetailSchema = z.object({
   accommodation: z.string().optional(),
   placesVisited: z.string().optional(),
   notes: z.string().optional(),
+  food: z.string().optional(),
+  foodCost: z.number().optional(),
+  localTravelCost: z.number().optional(),
   cost: z.number().optional(),
 });
 
@@ -323,7 +327,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                                 name={`dailyDetails.${index}.placesVisited`}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Places Visited</FormLabel>
+                                        <FormLabel>Local Places Visited</FormLabel>
                                         <FormControl>
                                             <Textarea placeholder="e.g., Gateway of India, Marine Drive (comma-separated)" {...field} />
                                         </FormControl>
@@ -331,6 +335,47 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                                     </FormItem>
                                 )}
                             />
+                            <FormField
+                                control={form.control}
+                                name={`dailyDetails.${index}.food`}
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Food Eaten</FormLabel>
+                                        <FormControl>
+                                            <Textarea placeholder="e.g., Vada Pav at Ashok Vada Pav, Kanda Bhaji at a local stall" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                             <div className="grid grid-cols-2 gap-4">
+                                <FormField
+                                    control={form.control}
+                                    name={`dailyDetails.${index}.foodCost`}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Food Cost (₹)</FormLabel>
+                                            <FormControl>
+                                                <Input type="number" placeholder="e.g., 1500" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name={`dailyDetails.${index}.localTravelCost`}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Local Travel Cost (₹)</FormLabel>
+                                            <FormControl>
+                                                <Input type="number" placeholder="e.g., 500" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                             </div>
                              <FormField
                                 control={form.control}
                                 name={`dailyDetails.${index}.notes`}
@@ -349,7 +394,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                                 name={`dailyDetails.${index}.cost`}
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Day's Cost (₹)</FormLabel>
+                                        <FormLabel>Day's Total Cost (₹)</FormLabel>
                                         <FormControl>
                                             <Input type="number" placeholder="e.g., 5000" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
                                         </FormControl>

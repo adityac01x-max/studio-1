@@ -1,10 +1,14 @@
 
+
 export type DailyDetail = {
   date: Date;
   accommodation?: string;
   placesVisited?: string;
   notes?: string;
   cost?: number;
+  food?: string;
+  foodCost?: number;
+  localTravelCost?: number;
 };
 
 export type Trip = {

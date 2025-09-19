@@ -75,8 +75,13 @@ export function TripDetails({ trip }: TripDetailsProps) {
                         <div className="grid gap-2 text-sm ml-4">
                             {day.accommodation && <p><span className='font-medium'>Stayed at:</span> {day.accommodation}</p>}
                             {day.placesVisited && <p><span className='font-medium'>Visited:</span> {day.placesVisited}</p>}
+                            {day.food && <p><span className='font-medium'>Food Eaten:</span> {day.food}</p>}
+                             <div className='flex gap-4'>
+                                {day.foodCost && <p className="flex items-center gap-1"><span className='font-medium'>Food Cost:</span> ₹{day.foodCost}</p>}
+                                {day.localTravelCost && <p className="flex items-center gap-1"><span className='font-medium'>Local Travel Cost:</span> ₹{day.localTravelCost}</p>}
+                            </div>
                             {day.notes && <p><span className='font-medium'>Notes:</span> <span className="italic text-muted-foreground">"{day.notes}"</span></p>}
-                            {day.cost && <p className="flex items-center gap-1"><span className='font-medium'>Cost:</span> ₹{day.cost}</p>}
+                            {day.cost && <p className="flex items-center gap-1"><span className='font-medium'>Total Day Cost:</span> ₹{day.cost}</p>}
                         </div>
                         {index < trip.dailyDetails!.length - 1 && <Separator className="my-4" />}
                      </div>
