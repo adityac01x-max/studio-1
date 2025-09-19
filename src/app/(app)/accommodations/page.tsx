@@ -172,6 +172,9 @@ export default function AccommodationsPage() {
                                <div className="flex flex-col md:flex-row">
                                     <div className="md:w-1/3 relative">
                                          <Image src={item.imageUrl} alt={item.name} width={400} height={300} className="object-cover h-full w-full" data-ai-hint={item.imageHint} />
+                                         <div className="absolute top-2 right-2 bg-background/70 p-2 rounded-full backdrop-blur-sm">
+                                            <Hotel className="w-5 h-5 text-foreground" />
+                                         </div>
                                     </div>
                                     <div className="md:w-2/3 flex flex-col">
                                         <CardHeader>
