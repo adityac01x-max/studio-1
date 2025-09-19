@@ -1,12 +1,12 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Logo } from '@/components/logo';
 import './login-animation.css';
 
-export default function LoginAnimationPage() {
+function LoginAnimation() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const role = searchParams.get('role');
@@ -35,10 +35,21 @@ export default function LoginAnimationPage() {
   }, [router, role]);
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center bg-background p-4 overflow-hidden">
-        <div className="animation-container">
-            <Logo className="text-6xl" />
-        </div>
+    <div className="animation-container">
+        <Logo className="text-6xl" />
     </div>
   );
 }
+
+
+export default function LoginAnimationPage() {
+
+  return (
+    <div className="flex flex-col min-h-screen items-center justify-center bg-background p-4 overflow-hidden">
+        <Suspense fallback={<div>Loading...</div>}>
+            <LoginAnimation />
+        </Suspense>
+    </div>
+  );
+}
+
