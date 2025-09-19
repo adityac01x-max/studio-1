@@ -20,7 +20,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { CalendarIcon, Upload } from 'lucide-react';
+import { CalendarIcon, Upload, Milestone } from 'lucide-react';
 import { format, addDays, differenceInDays } from 'date-fns';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -47,6 +47,7 @@ const tripSchema = z.object({
   startDate: z.date({ required_error: 'A start date is required.' }),
   endDate: z.date({ required_error: 'An end date is required.' }),
   mode: z.enum(['flight', 'train', 'bus', 'car']),
+  distance: z.number().optional(),
   travelCost: z.number().optional(),
   totalCost: z.number().optional(),
   dailyDetails: z.array(dailyDetailSchema).optional(),
@@ -71,8 +72,9 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
     defaultValues: tripToEdit ? {
         ...tripToEdit,
         startDate: tripToEdit.startTime,
-        endDate: tripToEdit.dailyDetails?.[tripToEdit.dailyDetails.length - 1]?.date || tripToEdit.startTime,
+        endDate: tripToEdit.endTime || tripToEdit.dailyDetails?.[tripToEdit.dailyDetails.length - 1]?.date || tripToEdit.startTime,
         travelers: tripToEdit.travelers.join(', '),
+        distance: tripToEdit.distance,
         travelCost: tripToEdit.travelCost || undefined,
         totalCost: tripToEdit.totalCost || undefined,
     } : {
@@ -80,6 +82,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
       destination: '',
       dailyDetails: [],
       travelers: '',
+      distance: undefined,
       travelCost: undefined,
       totalCost: undefined,
     },
@@ -173,7 +176,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                 name="startDate"
                 render={({ field }) => (
                     <FormItem className="flex flex-col">
-                    <FormLabel>Start Date</FormLabel>
+                    <FormLabel>Start Date & Time</FormLabel>
                     <Popover>
                         <PopoverTrigger asChild>
                         <FormControl>
@@ -185,7 +188,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                             )}
                             >
                             {field.value ? (
-                                format(field.value, "PPP")
+                                format(field.value, "PPp")
                             ) : (
                                 <span>Pick a date</span>
                             )}
@@ -212,7 +215,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                 name="endDate"
                 render={({ field }) => (
                     <FormItem className="flex flex-col">
-                    <FormLabel>End Date</FormLabel>
+                    <FormLabel>End Date & Time</FormLabel>
                     <Popover>
                         <PopoverTrigger asChild>
                         <FormControl>
@@ -224,7 +227,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                             )}
                             >
                             {field.value ? (
-                                format(field.value, "PPP")
+                                format(field.value, "PPp")
                             ) : (
                                 <span>Pick a date</span>
                             )}
@@ -285,6 +288,23 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                   )}
               />
             </div>
+             {form.getValues('distance') !== undefined && (
+                <FormField
+                    control={form.control}
+                    name="distance"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Distance</FormLabel>
+                            <FormControl>
+                                <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground p-2 border rounded-md">
+                                    <Milestone className="h-4 w-4" />
+                                    <span>{field.value?.toFixed(2)} km</span>
+                                </div>
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+            )}
             <FormField
               control={form.control}
               name="travelers"

@@ -98,6 +98,22 @@ const modeIcons = {
   other: <MapPin className="h-4 w-4 text-muted-foreground" />,
 }
 
+function haversineDistance(coords1: {latitude: number, longitude: number}, coords2: {latitude: number, longitude: number}): number {
+    const toRad = (x: number) => x * Math.PI / 180;
+    const R = 6371; // Earth radius in km
+
+    const dLat = toRad(coords2.latitude - coords1.latitude);
+    const dLon = toRad(coords2.longitude - coords1.longitude);
+    const lat1 = toRad(coords1.latitude);
+    const lat2 = toRad(coords2.latitude);
+
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    
+    return R * c; // Distance in km
+}
+
 export default function DashboardPage() {
   const [trips, setTrips] = useState<Trip[]>(mockTrips);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -198,6 +214,11 @@ export default function DashboardPage() {
     const startPoint = tripPath.current[0];
     const endPoint = tripPath.current[tripPath.current.length - 1];
 
+    let totalDistance = 0;
+    for (let i = 1; i < tripPath.current.length; i++) {
+        totalDistance += haversineDistance(tripPath.current[i-1], tripPath.current[i]);
+    }
+
     setTrackingStatus('Resolving location names...');
     let originName = `Lat: ${startPoint.latitude.toFixed(4)}, Lon: ${startPoint.longitude.toFixed(4)}`;
     let destinationName = `Lat: ${endPoint.latitude.toFixed(4)}, Lon: ${endPoint.longitude.toFixed(4)}`;
@@ -220,32 +241,37 @@ export default function DashboardPage() {
         setTrackingStatus('Not Tracking');
     }
 
-    const newTrip: Trip = {
+    const newTrip: Partial<Trip> = {
         id: (trips.length + 1).toString(),
         tripNumber: `BT-D-${String(trips.length + 1).padStart(3, '0')}`,
         origin: originName,
         destination: destinationName,
         startTime: tripStartTime.current,
+        endTime: endTime,
         mode: 'car', // Defaulting to car for simulation
         travelers: [localStorage.getItem('natpac_userId') || 'Anonymous User'],
         status: 'Completed',
         tripPath: tripPath.current,
+        distance: totalDistance,
     };
     
-    setTrips(prev => [newTrip, ...prev].sort((a,b) => b.startTime.getTime() - a.startTime.getTime()));
-    toast({
-        title: "Trip Logged!",
-        description: `Your trip from ${originName} to ${destinationName} has been logged.`,
-    });
+    setSelectedTrip(newTrip as Trip);
+    setIsViewing(false);
+    setDialogOpen(true);
     
+    toast({
+        title: "Trip Captured!",
+        description: `Please review and complete the details for your trip from ${originName} to ${destinationName}.`,
+    });
+
      try {
       await uploadTripData({
         userId: localStorage.getItem('natpac_userId') || 'Anonymous User',
-        origin: newTrip.origin,
-        destination: newTrip.destination,
-        startTime: newTrip.startTime.toISOString(),
+        origin: newTrip.origin!,
+        destination: newTrip.destination!,
+        startTime: newTrip.startTime!.toISOString(),
         endTime: endTime.toISOString(),
-        mode: newTrip.mode,
+        mode: newTrip.mode!,
         tripPath: newTrip.tripPath,
       });
       toast({
@@ -454,4 +480,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-

@@ -4,7 +4,7 @@ import type { Trip } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { Star, Building, Plane, Train, Car, Bus, User, Calendar, IndianRupee, Image as ImageIcon } from 'lucide-react';
+import { Star, Building, Plane, Train, Car, Bus, User, Calendar, IndianRupee, Image as ImageIcon, Milestone } from 'lucide-react';
 import { format } from 'date-fns';
 import Image from 'next/image';
 
@@ -58,6 +58,15 @@ export function TripDetails({ trip }: TripDetailsProps) {
                     <div>
                         <p className="font-semibold">Accommodation</p>
                         <p>{trip.accommodation?.name} ({trip.accommodation?.type})</p>
+                    </div>
+                </div>
+             )}
+             {trip.distance && (
+                <div className="flex items-center gap-2">
+                    <Milestone className="text-muted-foreground"/>
+                    <div>
+                        <p className="font-semibold">Distance</p>
+                        <p>{trip.distance.toFixed(2)} km</p>
                     </div>
                 </div>
              )}

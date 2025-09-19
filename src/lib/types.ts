@@ -24,6 +24,8 @@ export type Trip = {
   origin: string;
   destination: string;
   startTime: Date;
+  endTime?: Date;
+  distance?: number;
   mode: 'flight' | 'train' | 'bus' | 'car' | 'other' | 'walk' | 'bicycle';
   travelers: string[];
   status: 'Completed' | 'Upcoming' | 'In Progress';
