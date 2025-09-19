@@ -26,25 +26,24 @@ export default function LocationExplorerPage() {
                     const placeholder = PlaceHolderImages.find(p => p.id === location.imageId);
                     return (
                         <Link key={location.name} href={`/location/${encodeURIComponent(location.name)}`}>
-                            <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                                <div className="relative h-48 w-full">
+                            <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
+                                <div className="relative h-64 w-full">
                                     <Image 
                                         src={placeholder?.imageUrl || "https://picsum.photos/seed/placeholder/600/400"} 
                                         alt={location.name} 
                                         fill 
-                                        className="object-cover" 
+                                        className="object-cover transition-transform duration-300 group-hover:scale-105" 
                                         data-ai-hint={placeholder?.imageHint}
                                     />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                                    <div className="absolute bottom-0 left-0 p-4">
+                                        <h3 className="font-headline text-2xl font-bold text-white">{location.name}</h3>
+                                        <p className="text-sm text-white/80">{location.description}</p>
+                                    </div>
+                                    <div className="absolute top-4 right-4 bg-primary/80 text-primary-foreground rounded-full p-2 transform transition-transform duration-300 group-hover:scale-110">
+                                        <ArrowRight className="h-5 w-5"/>
+                                    </div>
                                 </div>
-                                <CardHeader>
-                                    <CardTitle className="flex items-center justify-between">
-                                        <span>{location.name}</span>
-                                        <ArrowRight className="h-5 w-5 text-primary"/>
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <p className="text-muted-foreground">{location.description}</p>
-                                </CardContent>
                             </Card>
                         </Link>
                     )
