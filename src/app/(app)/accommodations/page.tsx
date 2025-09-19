@@ -126,7 +126,6 @@ export default function AccommodationsPage() {
                         {Array.from({ length: 3 }).map((_, index) => (
                            <Card key={index} className="p-4">
                                 <div className="flex gap-4">
-                                     <Skeleton className="h-32 w-48 rounded-md" />
                                      <div className="space-y-2 flex-1">
                                         <Skeleton className="h-6 w-3/4" />
                                         <Skeleton className="h-4 w-1/4" />
@@ -169,14 +168,8 @@ export default function AccommodationsPage() {
                     <div className="grid grid-cols-1 gap-6">
                         {filteredResults.map((item) => (
                             <Card key={item.name} className="overflow-hidden">
-                               <div className="flex flex-col md:flex-row">
-                                    <div className="md:w-1/3 relative">
-                                         <Image src={item.imageUrl} alt={item.name} width={400} height={300} className="object-cover h-full w-full" data-ai-hint={item.imageHint} />
-                                         <div className="absolute top-2 right-2 bg-background/70 p-2 rounded-full backdrop-blur-sm">
-                                            <Hotel className="w-5 h-5 text-foreground" />
-                                         </div>
-                                    </div>
-                                    <div className="md:w-2/3 flex flex-col">
+                               <div className="flex flex-col">
+                                    <div className="flex flex-col">
                                         <CardHeader>
                                             <CardTitle>{item.name}</CardTitle>
                                             <div className="flex items-center gap-1 text-yellow-500">
@@ -233,3 +226,5 @@ export default function AccommodationsPage() {
         </div>
     );
 }
+
+    
