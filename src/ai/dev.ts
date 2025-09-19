@@ -10,3 +10,4 @@ import '@/ai/flows/compare-flights';
 import '@/ai/flows/compare-trains';
 import '@/ai/flows/compare-buses';
 import '@/ai/flows/upload-trip-data';
+import '@/ai/flows/reverse-geocode';

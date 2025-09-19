@@ -17,6 +17,7 @@ import { format, isToday, isYesterday, formatRelative } from 'date-fns';
 import { TripDetails } from './trip-details';
 import { useToast } from '@/hooks/use-toast';
 import { uploadTripData } from '@/ai/flows/upload-trip-data';
+import { reverseGeocode } from '@/ai/flows/reverse-geocode';
 import { Separator } from '@/components/ui/separator';
 
 const mockTrips: Trip[] = [
@@ -197,14 +198,33 @@ export default function DashboardPage() {
     const startPoint = tripPath.current[0];
     const endPoint = tripPath.current[tripPath.current.length - 1];
 
-    const origin = `Lat: ${startPoint.latitude.toFixed(4)}, Lon: ${startPoint.longitude.toFixed(4)}`;
-    const destination = `Lat: ${endPoint.latitude.toFixed(4)}, Lon: ${endPoint.longitude.toFixed(4)}`;
+    setTrackingStatus('Resolving location names...');
+    let originName = `Lat: ${startPoint.latitude.toFixed(4)}, Lon: ${startPoint.longitude.toFixed(4)}`;
+    let destinationName = `Lat: ${endPoint.latitude.toFixed(4)}, Lon: ${endPoint.longitude.toFixed(4)}`;
+
+    try {
+        const [originRes, destRes] = await Promise.all([
+            reverseGeocode({ latitude: startPoint.latitude, longitude: startPoint.longitude }),
+            reverseGeocode({ latitude: endPoint.latitude, longitude: endPoint.longitude }),
+        ]);
+        originName = originRes.placeName;
+        destinationName = destRes.placeName;
+    } catch (e) {
+        console.error("Reverse geocoding failed", e);
+        toast({
+            variant: "destructive",
+            title: "Could not resolve location names",
+            description: "Defaulting to latitude/longitude.",
+        });
+    } finally {
+        setTrackingStatus('Not Tracking');
+    }
 
     const newTrip: Trip = {
         id: (trips.length + 1).toString(),
         tripNumber: `BT-D-${String(trips.length + 1).padStart(3, '0')}`,
-        origin,
-        destination,
+        origin: originName,
+        destination: destinationName,
         startTime: tripStartTime.current,
         mode: 'car', // Defaulting to car for simulation
         travelers: [localStorage.getItem('natpac_userId') || 'Anonymous User'],
@@ -215,7 +235,7 @@ export default function DashboardPage() {
     setTrips(prev => [newTrip, ...prev].sort((a,b) => b.startTime.getTime() - a.startTime.getTime()));
     toast({
         title: "Trip Logged!",
-        description: `Your trip from ${origin} to ${destination} has been logged.`,
+        description: `Your trip from ${originName} to ${destinationName} has been logged.`,
     });
     
      try {
