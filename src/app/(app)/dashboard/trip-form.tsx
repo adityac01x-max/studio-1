@@ -24,9 +24,10 @@ import { CalendarIcon, Upload, Milestone } from 'lucide-react';
 import { format, addDays, differenceInDays } from 'date-fns';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
 import type { Trip } from '@/lib/types';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 
 
 const dailyDetailSchema = z.object({
@@ -62,10 +63,26 @@ type TripFormProps = {
   setDialogOpen: (open: boolean) => void;
 };
 
+function useDebounce(value: any, delay: number) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+  return debouncedValue;
+}
+
+const AUTOSAVE_KEY = 'trip-form-autosave';
 
 export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
+  const [showRestoreDialog, setShowRestoreDialog] = useState(false);
+  const savedDataRef = useRef<any>(null);
 
   const form = useForm<TripFormValues>({
     resolver: zodResolver(tripSchema),
@@ -87,6 +104,48 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
       totalCost: undefined,
     },
   });
+  
+  const watchedData = form.watch();
+  const debouncedData = useDebounce(watchedData, 1000);
+
+  useEffect(() => {
+    if (!tripToEdit) { // Only auto-save for new trips
+        try {
+            const dataToSave = JSON.stringify(debouncedData);
+            localStorage.setItem(AUTOSAVE_KEY, dataToSave);
+        } catch (e) {
+            console.error("Could not save to localStorage", e);
+        }
+    }
+  }, [debouncedData, tripToEdit]);
+
+  useEffect(() => {
+      if (!tripToEdit) {
+          try {
+              const savedData = localStorage.getItem(AUTOSAVE_KEY);
+              if (savedData) {
+                  savedDataRef.current = JSON.parse(savedData, (key, value) => {
+                      if (key === 'startDate' || key === 'endDate' || key === 'date') {
+                          return new Date(value);
+                      }
+                      return value;
+                  });
+                  if (savedDataRef.current && (savedDataRef.current.origin || savedDataRef.current.destination)) {
+                     setShowRestoreDialog(true);
+                  }
+              }
+          } catch(e) {
+              console.error("Could not read from localStorage", e);
+          }
+      }
+  }, [tripToEdit]);
+
+  const restoreData = () => {
+    if (savedDataRef.current) {
+        form.reset(savedDataRef.current);
+    }
+    setShowRestoreDialog(false);
+  };
   
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -134,11 +193,30 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
       title: tripToEdit ? 'Trip Updated!' : 'Trip Added!',
       description: `Your trip from ${values.origin} to ${values.destination} has been saved.`,
     });
+    localStorage.removeItem(AUTOSAVE_KEY);
     setDialogOpen(false);
   }
 
   return (
     <div className="max-h-[70vh] overflow-y-auto pr-4">
+    <AlertDialog open={showRestoreDialog} onOpenChange={setShowRestoreDialog}>
+        <AlertDialogContent>
+            <AlertDialogHeader>
+                <AlertDialogTitle>Restore Unsaved Changes?</AlertDialogTitle>
+                <AlertDialogDescription>
+                    We found some unsaved trip information. Would you like to restore it?
+                </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+                <AlertDialogCancel onClick={() => {
+                    localStorage.removeItem(AUTOSAVE_KEY);
+                    setShowRestoreDialog(false);
+                }}>Discard</AlertDialogCancel>
+                <AlertDialogAction onClick={restoreData}>Restore</AlertDialogAction>
+            </AlertDialogFooter>
+        </AlertDialogContent>
+    </AlertDialog>
+
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         {currentStep === 0 && (
