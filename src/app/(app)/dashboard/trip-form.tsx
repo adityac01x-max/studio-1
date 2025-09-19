@@ -73,11 +73,15 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
         startDate: tripToEdit.startTime,
         endDate: tripToEdit.dailyDetails?.[tripToEdit.dailyDetails.length - 1]?.date || tripToEdit.startTime,
         travelers: tripToEdit.travelers.join(', '),
+        travelCost: tripToEdit.travelCost || undefined,
+        totalCost: tripToEdit.totalCost || undefined,
     } : {
       origin: '',
       destination: '',
       dailyDetails: [],
       travelers: '',
+      travelCost: undefined,
+      totalCost: undefined,
     },
   });
   
@@ -96,7 +100,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
 
       if (days > currentDays) {
         for (let i = currentDays; i < days; i++) {
-          append({ date: addDays(startDate, i) });
+          append({ date: addDays(startDate, i), foodCost: undefined, localTravelCost: undefined, cost: undefined });
         }
       } else if (days < currentDays) {
         for (let i = currentDays - 1; i >= days; i--) {
@@ -274,7 +278,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                       <FormItem>
                       <FormLabel>Travel Cost (₹)</FormLabel>
                       <FormControl>
-                          <Input type="number" placeholder="e.g., 8000" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
+                          <Input type="number" placeholder="e.g., 8000" {...field} value={field.value ?? ""} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
                       </FormControl>
                       <FormMessage />
                       </FormItem>
@@ -357,7 +361,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                                         <FormItem>
                                             <FormLabel>Food Cost (₹)</FormLabel>
                                             <FormControl>
-                                                <Input type="number" placeholder="e.g., 1500" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
+                                                <Input type="number" placeholder="e.g., 1500" {...field} value={field.value ?? ""} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -370,7 +374,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                                         <FormItem>
                                             <FormLabel>Local Travel Cost (₹)</FormLabel>
                                             <FormControl>
-                                                <Input type="number" placeholder="e.g., 500" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
+                                                <Input type="number" placeholder="e.g., 500" {...field} value={field.value ?? ""} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -418,7 +422,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                                     <FormItem>
                                         <FormLabel>Day's Total Cost (₹)</FormLabel>
                                         <FormControl>
-                                            <Input type="number" placeholder="e.g., 5000" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
+                                            <Input type="number" placeholder="e.g., 5000" {...field} value={field.value ?? ""} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -441,7 +445,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                         <FormItem>
                         <FormLabel>Total Trip Cost (₹)</FormLabel>
                         <FormControl>
-                            <Input type="number" placeholder="e.g., 50000" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
+                            <Input type="number" placeholder="e.g., 50000" {...field} value={field.value ?? ""} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
                         </FormControl>
                         <FormDescription>Optional: Overall budget for the trip.</FormDescription>
                         <FormMessage />
@@ -472,3 +476,5 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
     </div>
   );
 }
+
+    
