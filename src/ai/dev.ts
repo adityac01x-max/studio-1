@@ -1,3 +1,4 @@
+
 import { config } from 'dotenv';
 config();
 
@@ -8,3 +9,4 @@ import '@/ai/flows/compare-accommodations';
 import '@/ai/flows/compare-flights';
 import '@/ai/flows/compare-trains';
 import '@/ai/flows/compare-buses';
+import '@/ai/flows/upload-trip-data';
