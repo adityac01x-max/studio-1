@@ -8,68 +8,50 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
-import { CalendarIcon, Search } from 'lucide-react';
+import { CalendarIcon, Search, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
+import { compareAccommodations, CompareAccommodationsInput, CompareAccommodationsOutput } from '@/ai/flows/compare-accommodations';
+import { Skeleton } from '@/components/ui/skeleton';
 
-const mockAccommodations = [
-    {
-        name: 'The Taj Mahal Palace',
-        platform: 'MakeMyTrip',
-        price: '₹25,000',
-        rating: 4.8,
-        imageUrl: `https://picsum.photos/seed/taj-palace/200/150`,
-        imageHint: 'luxury hotel',
-        url: 'https://www.makemytrip.com/hotels/',
-    },
-    {
-        name: 'The Taj Mahal Palace',
-        platform: 'Goibibo',
-        price: '₹24,500',
-        rating: 4.8,
-        imageUrl: `https://picsum.photos/seed/taj-palace/200/150`,
-        imageHint: 'luxury hotel',
-        url: 'https://www.goibibo.com/hotels/',
-    },
-    {
-        name: 'The Taj Mahal Palace',
-        platform: 'Booking.com',
-        price: '₹26,000',
-        rating: 4.8,
-        imageUrl: `https://picsum.photos/seed/taj-palace/200/150`,
-        imageHint: 'luxury hotel',
-        url: 'https://www.booking.com/',
-    },
-     {
-        name: 'Vivanta Goa',
-        platform: 'MakeMyTrip',
-        price: '₹18,000',
-        rating: 4.5,
-        imageUrl: `https://picsum.photos/seed/vivanta-goa/200/150`,
-        imageHint: 'beach resort',
-        url: 'https://www.makemytrip.com/hotels/',
-    },
-    {
-        name: 'Vivanta Goa',
-        platform: 'Goibibo',
-        price: '₹18,500',
-        rating: 4.5,
-        imageUrl: `https://picsum.photos/seed/vivanta-goa/200/150`,
-        imageHint: 'beach resort',
-        url: 'https://www.goibibo.com/hotels/',
-    },
-];
-
+type AccommodationResult = CompareAccommodationsOutput['results'][0];
 
 export default function AccommodationsPage() {
-    const [showResults, setShowResults] = useState(false);
+    const [location, setLocation] = useState('Mumbai');
+    const [checkInDate, setCheckInDate] = useState<Date | undefined>(new Date());
+    const [checkOutDate, setCheckOutDate] = useState<Date | undefined>(new Date(Date.now() + 3 * 24 * 60 * 60 * 1000));
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [results, setResults] = useState<AccommodationResult[]>([]);
 
-    const handleSearch = (e: React.FormEvent) => {
+    const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
-        setShowResults(true);
+        if (!location || !checkInDate || !checkOutDate) {
+            setError('Please fill in all search fields.');
+            return;
+        }
+        
+        setError('');
+        setIsLoading(true);
+        setResults([]);
+
+        try {
+            const input: CompareAccommodationsInput = {
+                location,
+                checkInDate: format(checkInDate, 'PPP'),
+                checkOutDate: format(checkOutDate, 'PPP'),
+            };
+            const response = await compareAccommodations(input);
+            setResults(response.results);
+        } catch (err) {
+            console.error(err);
+            setError('Failed to get comparison results. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -83,19 +65,19 @@ export default function AccommodationsPage() {
                     <form onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-end">
                         <div className="space-y-2">
                             <Label htmlFor="location">Location</Label>
-                            <Input id="location" placeholder="e.g., Mumbai" defaultValue="Mumbai" />
+                            <Input id="location" placeholder="e.g., Mumbai" value={location} onChange={(e) => setLocation(e.target.value)} />
                         </div>
                         <div className="space-y-2">
                              <Label>Check-in Date</Label>
                              <Popover>
                                 <PopoverTrigger asChild>
-                                    <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal")}>
+                                    <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !checkInDate && "text-muted-foreground")}>
                                         <CalendarIcon className="mr-2 h-4 w-4" />
-                                        {format(new Date(), "PPP")}
+                                        {checkInDate ? format(checkInDate, "PPP") : <span>Pick a date</span>}
                                     </Button>
                                 </PopoverTrigger>
                                 <PopoverContent className="w-auto p-0">
-                                    <Calendar mode="single" initialFocus />
+                                    <Calendar mode="single" selected={checkInDate} onSelect={setCheckInDate} initialFocus />
                                 </PopoverContent>
                             </Popover>
                         </div>
@@ -103,28 +85,32 @@ export default function AccommodationsPage() {
                              <Label>Check-out Date</Label>
                              <Popover>
                                 <PopoverTrigger asChild>
-                                    <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal")}>
+                                    <Button variant={"outline"} className={cn("w-full justify-start text-left font-normal", !checkOutDate && "text-muted-foreground")}>
                                         <CalendarIcon className="mr-2 h-4 w-4" />
-                                        {format(new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), "PPP")}
+                                        {checkOutDate ? format(checkOutDate, "PPP") : <span>Pick a date</span>}
                                     </Button>
                                 </PopoverTrigger>
                                 <PopoverContent className="w-auto p-0">
-                                    <Calendar mode="single" initialFocus />
+                                    <Calendar mode="single" selected={checkOutDate} onSelect={setCheckOutDate} disabled={{ before: checkInDate || new Date() }} initialFocus />
                                 </PopoverContent>
                             </Popover>
                         </div>
-                        <Button type="submit" className="w-full">
-                            <Search className="mr-2 h-4 w-4" /> Search
+                        <Button type="submit" className="w-full" disabled={isLoading}>
+                            {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Search className="mr-2 h-4 w-4" />} 
+                            {isLoading ? 'Searching...' : 'Search'}
                         </Button>
                     </form>
+                    {error && <p className="text-sm font-medium text-destructive mt-4">{error}</p>}
                 </CardContent>
             </Card>
 
-            {showResults && (
+            {(isLoading || results.length > 0) && (
                  <Card>
                     <CardHeader>
                         <CardTitle>Comparison Results</CardTitle>
-                        <CardDescription>Showing best prices for hotels in Mumbai.</CardDescription>
+                        <CardDescription>
+                            {isLoading ? `Searching for hotels in ${location}...` : `Showing best prices for hotels in ${location}.`}
+                        </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <Table>
@@ -138,26 +124,45 @@ export default function AccommodationsPage() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {mockAccommodations.map((item, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell>
-                                            <div className="flex items-center gap-4">
-                                                <Image src={item.imageUrl} alt={item.name} width={100} height={75} className="rounded-md object-cover" data-ai-hint={item.imageHint} />
-                                                <span className="font-medium">{item.name}</span>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Badge variant="secondary">{item.platform}</Badge>
-                                        </TableCell>
-                                        <TableCell>{item.rating}</TableCell>
-                                        <TableCell className="text-right font-semibold">{item.price}</TableCell>
-                                        <TableCell className="text-right">
-                                            <Button asChild size="sm">
-                                                <a href={item.url} target="_blank" rel="noopener noreferrer">Book Now</a>
-                                            </Button>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
+                                {isLoading ? (
+                                    Array.from({ length: 5 }).map((_, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>
+                                                <div className="flex items-center gap-4">
+                                                    <Skeleton className="h-[75px] w-[100px] rounded-md" />
+                                                    <div className="space-y-2">
+                                                        <Skeleton className="h-4 w-[150px]" />
+                                                    </div>
+                                                </div>
+                                            </TableCell>
+                                            <TableCell><Skeleton className="h-4 w-[80px]" /></TableCell>
+                                            <TableCell><Skeleton className="h-4 w-[40px]" /></TableCell>
+                                            <TableCell className="text-right"><Skeleton className="h-4 w-[60px] ml-auto" /></TableCell>
+                                            <TableCell className="text-right"><Skeleton className="h-8 w-[100px] ml-auto" /></TableCell>
+                                        </TableRow>
+                                    ))
+                                ) : (
+                                    results.map((item, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>
+                                                <div className="flex items-center gap-4">
+                                                    <Image src={item.imageUrl} alt={item.name} width={100} height={75} className="rounded-md object-cover" data-ai-hint={item.imageHint} />
+                                                    <span className="font-medium">{item.name}</span>
+                                                </div>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Badge variant="secondary">{item.platform}</Badge>
+                                            </TableCell>
+                                            <TableCell>{item.rating}</TableCell>
+                                            <TableCell className="text-right font-semibold">{item.price}</TableCell>
+                                            <TableCell className="text-right">
+                                                <Button asChild size="sm">
+                                                    <a href={item.url} target="_blank" rel="noopener noreferrer">Book Now</a>
+                                                </Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                )}
                             </TableBody>
                         </Table>
                     </CardContent>
