@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
-import { CalendarIcon, Search, Loader2 } from 'lucide-react';
+import { CalendarIcon, Search, Loader2, Hotel } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -26,6 +26,7 @@ export default function AccommodationsPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [results, setResults] = useState<AccommodationResult[]>([]);
+    const [hotelSearch, setHotelSearch] = useState('');
 
     const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -37,6 +38,7 @@ export default function AccommodationsPage() {
         setError('');
         setIsLoading(true);
         setResults([]);
+        setHotelSearch('');
 
         try {
             const input: CompareAccommodationsInput = {
@@ -53,6 +55,10 @@ export default function AccommodationsPage() {
             setIsLoading(false);
         }
     };
+    
+    const filteredResults = results.filter(item => 
+        item.name.toLowerCase().includes(hotelSearch.toLowerCase())
+    );
 
     return (
         <div className="space-y-8">
@@ -107,10 +113,24 @@ export default function AccommodationsPage() {
             {(isLoading || results.length > 0) && (
                  <Card>
                     <CardHeader>
-                        <CardTitle>Comparison Results</CardTitle>
-                        <CardDescription>
-                            {isLoading ? `Searching for hotels in ${location}...` : `Showing best prices for hotels in ${location}.`}
-                        </CardDescription>
+                        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                            <div>
+                                <CardTitle>Comparison Results</CardTitle>
+                                <CardDescription>
+                                    {isLoading ? `Searching for hotels in ${location}...` : `Showing best prices for hotels in ${location}.`}
+                                </CardDescription>
+                            </div>
+                            <div className="relative">
+                                <Hotel className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                <Input 
+                                    placeholder="Search hotels..." 
+                                    className="pl-9"
+                                    value={hotelSearch}
+                                    onChange={(e) => setHotelSearch(e.target.value)}
+                                    disabled={isLoading || results.length === 0}
+                                />
+                            </div>
+                        </div>
                     </CardHeader>
                     <CardContent>
                         <Table>
@@ -142,7 +162,7 @@ export default function AccommodationsPage() {
                                         </TableRow>
                                     ))
                                 ) : (
-                                    results.map((item, index) => (
+                                    filteredResults.map((item, index) => (
                                         <TableRow key={index}>
                                             <TableCell>
                                                 <div className="flex items-center gap-4">
@@ -165,6 +185,11 @@ export default function AccommodationsPage() {
                                 )}
                             </TableBody>
                         </Table>
+                         {!isLoading && filteredResults.length === 0 && (
+                            <div className="text-center py-10 text-muted-foreground">
+                                No hotels found matching your search.
+                            </div>
+                        )}
                     </CardContent>
                 </Card>
             )}
