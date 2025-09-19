@@ -25,7 +25,7 @@ export default function LoginPage() {
                     <ArrowRight className="ml-auto" />
                 </Link>
             </Button>
-            <Button asChild className="w-full" size="lg" variant="secondary">
+            <Button asChild className="w-full" size="lg" variant="outline">
                 <Link href="/login-animation?role=agency">
                     <Building2 className="mr-2"/>
                     Login as an Agency
@@ -52,3 +52,4 @@ export default function LoginPage() {
     </div>
   );
 }
+
