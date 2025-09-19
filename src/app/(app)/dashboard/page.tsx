@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
@@ -12,10 +13,11 @@ import type { Trip, TripPathPoint } from '@/lib/types';
 import { TripForm } from './trip-form';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
-import { format } from 'date-fns';
+import { format, isToday, isYesterday, formatRelative } from 'date-fns';
 import { TripDetails } from './trip-details';
 import { useToast } from '@/hooks/use-toast';
 import { uploadTripData } from '@/ai/flows/upload-trip-data';
+import { Separator } from '@/components/ui/separator';
 
 const mockTrips: Trip[] = [
   {
@@ -90,6 +92,9 @@ const modeIcons = {
   train: <Train className="h-4 w-4 text-muted-foreground" />,
   car: <Car className="h-4 w-4 text-muted-foreground" />,
   bus: <Bus className="h-4 w-4 text-muted-foreground" />,
+  walk: <MapPin className="h-4 w-4 text-muted-foreground" />,
+  bicycle: <MapPin className="h-4 w-4 text-muted-foreground" />,
+  other: <MapPin className="h-4 w-4 text-muted-foreground" />,
 }
 
 export default function DashboardPage() {
@@ -207,7 +212,7 @@ export default function DashboardPage() {
         tripPath: tripPath.current,
     };
     
-    setTrips(prev => [newTrip, ...prev]);
+    setTrips(prev => [newTrip, ...prev].sort((a,b) => b.startTime.getTime() - a.startTime.getTime()));
     toast({
         title: "Trip Logged!",
         description: `Your trip from ${origin} to ${destination} has been logged.`,
@@ -270,6 +275,22 @@ export default function DashboardPage() {
     setSelectedTrip(trip);
     setIsViewing(true);
     setDialogOpen(true);
+  }
+
+  const groupedTrips = trips.reduce((acc, trip) => {
+    const date = format(trip.startTime, 'yyyy-MM-dd');
+    if (!acc[date]) {
+      acc[date] = [];
+    }
+    acc[date].push(trip);
+    return acc;
+  }, {} as Record<string, Trip[]>);
+
+  const getRelativeDate = (date: string) => {
+    const d = new Date(date);
+    if(isToday(d)) return "Today";
+    if(isYesterday(d)) return "Yesterday";
+    return format(d, 'eeee, MMMM d, yyyy');
   }
 
 
@@ -348,66 +369,69 @@ export default function DashboardPage() {
       <Card>
         <CardHeader>
           <CardTitle>Upcoming & Past Trips</CardTitle>
-          <CardDescription>A list of all your recorded journeys.</CardDescription>
+          <CardDescription>A list of all your recorded journeys, organized by date.</CardDescription>
         </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="hidden sm:table-cell">Mode</TableHead>
-                <TableHead>Trip</TableHead>
-                <TableHead>Travelers</TableHead>
-                <TableHead>Date & Time</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>
-                  <span className="sr-only">Actions</span>
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {trips.map((trip) => (
-                <TableRow key={trip.id}>
-                  <TableCell className="hidden sm:table-cell">
-                    <div className="flex items-center gap-2">
-                        {trip.mode in modeIcons ? modeIcons[trip.mode as keyof typeof modeIcons] : <Car className="h-4 w-4 text-muted-foreground" />}
-                        <span className="capitalize">{trip.mode}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="font-medium">{trip.origin}</div>
-                    <div className="text-sm text-muted-foreground">to {trip.destination}</div>
-                  </TableCell>
-                   <TableCell>
-                      {trip.travelers.map(t => t.startsWith('user_') ? 'You' : t).join(', ')}
-                  </TableCell>
-                  <TableCell>{format(trip.startTime, 'MMM d, yyyy, h:mm a')}</TableCell>
-                  <TableCell>
-                    <Badge variant={trip.status === 'Completed' ? 'secondary' : 'default'}>
-                      {trip.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button aria-haspopup="true" size="icon" variant="ghost">
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem onSelect={() => handleEditClick(trip)}>Edit</DropdownMenuItem>
-                        <DropdownMenuItem onSelect={() => handleViewClick(trip)}>View Details</DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+        <CardContent className="space-y-6">
+            {Object.keys(groupedTrips).map(date => (
+              <div key={date}>
+                <h3 className="text-lg font-semibold sticky top-16 bg-background/80 backdrop-blur-sm py-2 z-10">{getRelativeDate(date)}</h3>
+                <Separator className="mb-4" />
+                <Table>
+                    <TableHeader>
+                    <TableRow>
+                        <TableHead className="w-[100px] hidden sm:table-cell">Mode</TableHead>
+                        <TableHead>Trip</TableHead>
+                        <TableHead>Time</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>
+                        <span className="sr-only">Actions</span>
+                        </TableHead>
+                    </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                    {groupedTrips[date].map((trip) => (
+                        <TableRow key={trip.id}>
+                        <TableCell className="hidden sm:table-cell">
+                            <div className="flex items-center gap-2">
+                                {trip.mode in modeIcons ? modeIcons[trip.mode as keyof typeof modeIcons] : <Car className="h-4 w-4 text-muted-foreground" />}
+                                <span className="capitalize">{trip.mode}</span>
+                            </div>
+                        </TableCell>
+                        <TableCell>
+                            <div className="font-medium">{trip.origin}</div>
+                            <div className="text-sm text-muted-foreground">to {trip.destination}</div>
+                        </TableCell>
+                        <TableCell>{format(trip.startTime, 'h:mm a')}</TableCell>
+                        <TableCell>
+                            <Badge variant={trip.status === 'Completed' ? 'secondary' : 'default'}>
+                            {trip.status}
+                            </Badge>
+                        </TableCell>
+                        <TableCell>
+                            <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button aria-haspopup="true" size="icon" variant="ghost">
+                                <MoreHorizontal className="h-4 w-4" />
+                                <span className="sr-only">Toggle menu</span>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                <DropdownMenuItem onSelect={() => handleEditClick(trip)}>Edit</DropdownMenuItem>
+                                <DropdownMenuItem onSelect={() => handleViewClick(trip)}>View Details</DropdownMenuItem>
+                                <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                            </DropdownMenuContent>
+                            </DropdownMenu>
+                        </TableCell>
+                        </TableRow>
+                    ))}
+                    </TableBody>
+                </Table>
+              </div>
+            ))}
         </CardContent>
       </Card>
     </div>
   );
 }
+
