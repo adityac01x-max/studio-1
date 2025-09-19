@@ -8,11 +8,11 @@ import { ArrowRight, Shield, User, Building2 } from 'lucide-react';
 
 export default function LoginPage() {
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center bg-background p-4">
-        <div className="absolute top-8 left-8">
+    <div className="flex flex-col min-h-screen items-center justify-center bg-background p-4 overflow-hidden">
+        <div className="absolute top-8 left-8 animate-slide-in-from-left">
             <Logo />
         </div>
-      <Card className="w-full max-w-md">
+      <Card className="w-full max-w-md animate-in fade-in zoom-in-95 duration-500">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Welcome Back</CardTitle>
           <CardDescription>Choose your role to sign in.</CardDescription>
@@ -41,7 +41,7 @@ export default function LoginPage() {
             </Button>
         </CardContent>
       </Card>
-      <div className="mt-6 text-center">
+      <div className="mt-6 text-center animate-slide-in-from-right">
         <p className="text-muted-foreground">
           Want to partner with us?{' '}
           <Link href="/enlist-agency" className="text-primary hover:underline font-semibold">
