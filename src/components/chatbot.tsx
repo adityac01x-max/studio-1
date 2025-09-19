@@ -72,9 +72,9 @@ export function Chatbot() {
         <Button
           variant="outline"
           size="icon"
-          className="fixed bottom-6 left-6 h-16 w-16 rounded-full shadow-2xl z-50 border-2 border-primary bg-background/80"
+          className="fixed bottom-6 left-6 h-16 w-16 rounded-full shadow-lg z-50 border-2 border-primary bg-background/60 backdrop-blur-sm"
         >
-          <MessageSquare className="h-8 w-8 text-primary" />
+          <MessageSquare className="h-8 w-8 text-primary animate-pulse" />
           <span className="sr-only">Open Chat</span>
         </Button>
       </SheetTrigger>

@@ -29,7 +29,7 @@ export default function Home() {
               priority
               data-ai-hint={heroImage?.imageHint}
             />
-            <div className="absolute inset-0 bg-background/60 dark:bg-background/80" />
+            <div className="absolute inset-0 bg-background/80" />
           </div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
             <h1 className="font-headline text-4xl md:text-6xl font-bold tracking-tight text-foreground">
@@ -53,7 +53,7 @@ export default function Home() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="font-headline text-3xl font-bold text-center mb-12">Features Designed for the Modern Traveler</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card className="text-center">
+              <Card className="text-center bg-card/80 backdrop-blur-sm border-primary/20 hover:border-primary/50 transition-all duration-300">
                 <CardHeader>
                   <div className="mx-auto bg-primary/10 rounded-full p-3 w-fit">
                     <Compass className="w-8 h-8 text-primary" />
@@ -66,7 +66,7 @@ export default function Home() {
                   </CardDescription>
                 </CardContent>
               </Card>
-              <Card className="text-center">
+              <Card className="text-center bg-card/80 backdrop-blur-sm border-primary/20 hover:border-primary/50 transition-all duration-300">
                 <CardHeader>
                   <div className="mx-auto bg-primary/10 rounded-full p-3 w-fit">
                     <Shield className="w-8 h-8 text-primary" />
@@ -79,7 +79,7 @@ export default function Home() {
                   </CardDescription>
                 </CardContent>
               </Card>
-              <Card className="text-center">
+              <Card className="text-center bg-card/80 backdrop-blur-sm border-primary/20 hover:border-primary/50 transition-all duration-300">
                 <CardHeader>
                   <div className="mx-auto bg-primary/10 rounded-full p-3 w-fit">
                     <Languages className="w-8 h-8 text-primary" />

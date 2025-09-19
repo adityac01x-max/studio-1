@@ -19,8 +19,8 @@ const config = {
     },
     extend: {
       fontFamily: {
-        body: ['"PT Sans"', 'sans-serif'],
-        headline: ['"Playfair Display"', 'serif'],
+        body: ['"Exo 2"', 'sans-serif'],
+        headline: ['"Orbitron"', 'sans-serif'],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -76,6 +76,9 @@ const config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
+      boxShadow: {
+        'glow-primary': '0 0 15px hsl(var(--primary) / 0.5)',
+      }
     },
   },
   plugins: [require('tailwindcss-animate')],

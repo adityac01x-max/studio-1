@@ -66,7 +66,7 @@ export function SosButton() {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="flex items-center gap-2">
+          <AlertDialogTitle className="flex items-center gap-2 font-headline">
             <ShieldAlert className="text-destructive" />
             Confirm SOS Alert
           </AlertDialogTitle>

@@ -143,7 +143,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <div className="relative min-h-screen">
         <Sidebar collapsible="icon">{sidebarContent}</Sidebar>
         <SidebarInset>
-          <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-4 md:px-6">
+          <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/60 backdrop-blur-sm px-4 md:px-6">
             <div className="md:hidden">
               <Sheet>
                 <SheetTrigger asChild>
