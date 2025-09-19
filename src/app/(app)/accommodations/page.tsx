@@ -2,13 +2,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
-import { CalendarIcon, Search, Loader2, Hotel } from 'lucide-react';
+import { CalendarIcon, Search, Loader2, Hotel, Star, Building } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -16,11 +16,12 @@ import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 import { compareAccommodations, CompareAccommodationsInput, CompareAccommodationsOutput } from '@/ai/flows/compare-accommodations';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Separator } from '@/components/ui/separator';
 
 type AccommodationResult = CompareAccommodationsOutput['results'][0];
 
 export default function AccommodationsPage() {
-    const [location, setLocation] = useState('Mumbai');
+    const [searchTerm, setSearchTerm] = useState('Mumbai');
     const [checkInDate, setCheckInDate] = useState<Date | undefined>(new Date());
     const [checkOutDate, setCheckOutDate] = useState<Date | undefined>(new Date(Date.now() + 3 * 24 * 60 * 60 * 1000));
     const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +31,7 @@ export default function AccommodationsPage() {
 
     const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!location || !checkInDate || !checkOutDate) {
+        if (!searchTerm || !checkInDate || !checkOutDate) {
             setError('Please fill in all search fields.');
             return;
         }
@@ -42,7 +43,7 @@ export default function AccommodationsPage() {
 
         try {
             const input: CompareAccommodationsInput = {
-                location,
+                searchTerm,
                 checkInDate: format(checkInDate, 'PPP'),
                 checkOutDate: format(checkOutDate, 'PPP'),
             };
@@ -70,8 +71,8 @@ export default function AccommodationsPage() {
                 <CardContent>
                     <form onSubmit={handleSearch} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-end">
                         <div className="space-y-2">
-                            <Label htmlFor="location">Location</Label>
-                            <Input id="location" placeholder="e.g., Mumbai" value={location} onChange={(e) => setLocation(e.target.value)} />
+                            <Label htmlFor="searchTerm">Hotel Name or Location</Label>
+                            <Input id="searchTerm" placeholder="e.g., Taj Mahal Palace or Mumbai" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                         </div>
                         <div className="space-y-2">
                              <Label>Check-in Date</Label>
@@ -110,86 +111,119 @@ export default function AccommodationsPage() {
                 </CardContent>
             </Card>
 
-            {(isLoading || results.length > 0) && (
+            {isLoading && (
                  <Card>
                     <CardHeader>
-                        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-                            <div>
-                                <CardTitle>Comparison Results</CardTitle>
-                                <CardDescription>
-                                    {isLoading ? `Searching for hotels in ${location}...` : `Showing best prices for hotels in ${location}.`}
-                                </CardDescription>
-                            </div>
-                            <div className="relative">
-                                <Hotel className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                                <Input 
-                                    placeholder="Search hotels..." 
-                                    className="pl-9"
-                                    value={hotelSearch}
-                                    onChange={(e) => setHotelSearch(e.target.value)}
-                                    disabled={isLoading || results.length === 0}
-                                />
-                            </div>
+                        <div className="flex justify-between items-center">
+                             <CardTitle>Searching for best deals...</CardTitle>
+                             <Loader2 className="h-6 w-6 animate-spin text-primary" />
                         </div>
+                        <CardDescription>
+                            Please wait while we compare prices for you.
+                        </CardDescription>
                     </CardHeader>
-                    <CardContent>
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Accommodation</TableHead>
-                                    <TableHead>Platform</TableHead>
-                                    <TableHead>Rating</TableHead>
-                                    <TableHead className="text-right">Price (per night)</TableHead>
-                                    <TableHead />
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {isLoading ? (
-                                    Array.from({ length: 5 }).map((_, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell>
-                                                <div className="flex items-center gap-4">
-                                                    <Skeleton className="h-[75px] w-[100px] rounded-md" />
-                                                    <div className="space-y-2">
-                                                        <Skeleton className="h-4 w-[150px]" />
-                                                    </div>
-                                                </div>
-                                            </TableCell>
-                                            <TableCell><Skeleton className="h-4 w-[80px]" /></TableCell>
-                                            <TableCell><Skeleton className="h-4 w-[40px]" /></TableCell>
-                                            <TableCell className="text-right"><Skeleton className="h-4 w-[60px] ml-auto" /></TableCell>
-                                            <TableCell className="text-right"><Skeleton className="h-8 w-[100px] ml-auto" /></TableCell>
-                                        </TableRow>
-                                    ))
-                                ) : (
-                                    filteredResults.map((item, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell>
-                                                <div className="flex items-center gap-4">
-                                                    <Image src={item.imageUrl} alt={item.name} width={100} height={75} className="rounded-md object-cover" data-ai-hint={item.imageHint} />
-                                                    <span className="font-medium">{item.name}</span>
-                                                </div>
-                                            </TableCell>
-                                            <TableCell>
-                                                <Badge variant="secondary">{item.platform}</Badge>
-                                            </TableCell>
-                                            <TableCell>{item.rating}</TableCell>
-                                            <TableCell className="text-right font-semibold">{item.price}</TableCell>
-                                            <TableCell className="text-right">
-                                                <Button asChild size="sm">
-                                                    <a href={item.url} target="_blank" rel="noopener noreferrer">Book Now</a>
-                                                </Button>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))
-                                )}
-                            </TableBody>
-                        </Table>
-                         {!isLoading && filteredResults.length === 0 && (
-                            <div className="text-center py-10 text-muted-foreground">
-                                No hotels found matching your search.
+                    <CardContent className="space-y-4">
+                        {Array.from({ length: 3 }).map((_, index) => (
+                           <Card key={index} className="p-4">
+                                <div className="flex gap-4">
+                                     <Skeleton className="h-32 w-48 rounded-md" />
+                                     <div className="space-y-2 flex-1">
+                                        <Skeleton className="h-6 w-3/4" />
+                                        <Skeleton className="h-4 w-1/4" />
+                                        <Separator className="my-4"/>
+                                        <div className="space-y-3 pt-2">
+                                            <div className="flex justify-between"><Skeleton className="h-4 w-1/3" /><Skeleton className="h-4 w-1/5" /></div>
+                                            <div className="flex justify-between"><Skeleton className="h-4 w-1/3" /><Skeleton className="h-4 w-1/5" /></div>
+                                        </div>
+                                     </div>
+                                </div>
+                            </Card>
+                        ))}
+                    </CardContent>
+                </Card>
+            )}
+
+            {!isLoading && results.length > 0 && (
+                <div className="space-y-4">
+                     <Card>
+                        <CardHeader>
+                             <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                                <div>
+                                    <CardTitle>Comparison Results</CardTitle>
+                                    <CardDescription>
+                                        {`Showing best prices for hotels based on your search.`}
+                                    </CardDescription>
+                                </div>
+                                <div className="relative">
+                                    <Hotel className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                    <Input 
+                                        placeholder="Filter hotels..." 
+                                        className="pl-9"
+                                        value={hotelSearch}
+                                        onChange={(e) => setHotelSearch(e.target.value)}
+                                    />
+                                </div>
                             </div>
-                        )}
+                        </CardHeader>
+                    </Card>
+                    <div className="grid grid-cols-1 gap-6">
+                        {filteredResults.map((item) => (
+                            <Card key={item.name} className="overflow-hidden">
+                               <div className="flex flex-col md:flex-row">
+                                    <div className="md:w-1/3 relative">
+                                         <Image src={item.imageUrl} alt={item.name} width={400} height={300} className="object-cover h-full w-full" data-ai-hint={item.imageHint} />
+                                    </div>
+                                    <div className="md:w-2/3 flex flex-col">
+                                        <CardHeader>
+                                            <CardTitle>{item.name}</CardTitle>
+                                            <div className="flex items-center gap-1 text-yellow-500">
+                                                {Array.from({ length: 5 }).map((_, i) => (
+                                                    <Star key={i} className={cn("w-5 h-5", i < item.rating ? 'fill-current' : 'fill-muted stroke-muted-foreground')} />
+                                                ))}
+                                                <span className="text-sm text-muted-foreground ml-2">({item.rating} stars)</span>
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent className="flex-grow">
+                                            <Table>
+                                                <TableHeader>
+                                                    <TableRow>
+                                                        <TableHead>Platform</TableHead>
+                                                        <TableHead className="text-right">Price (per night)</TableHead>
+                                                        <TableHead className="w-[120px]"></TableHead>
+                                                    </TableRow>
+                                                </TableHeader>
+                                                <TableBody>
+                                                    {item.platforms.map((platformItem) => (
+                                                         <TableRow key={platformItem.platform}>
+                                                            <TableCell>
+                                                                <Badge variant="secondary">{platformItem.platform}</Badge>
+                                                            </TableCell>
+                                                            <TableCell className="text-right font-semibold">{platformItem.price}</TableCell>
+                                                             <TableCell className="text-right">
+                                                                <Button asChild size="sm">
+                                                                    <a href={platformItem.url} target="_blank" rel="noopener noreferrer">Book Now</a>
+                                                                </Button>
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </CardContent>
+                                    </div>
+                               </div>
+                            </Card>
+                        ))}
+                    </div>
+                </div>
+            )}
+             {!isLoading && results.length === 0 && (
+                <Card>
+                    <CardContent className="py-10">
+                        <div className="text-center text-muted-foreground">
+                            <Building className="mx-auto h-12 w-12 mb-4"/>
+                            <p>No hotels found matching your search criteria.</p>
+                            <p className="text-sm">Try searching for a different hotel or location.</p>
+                        </div>
                     </CardContent>
                 </Card>
             )}
