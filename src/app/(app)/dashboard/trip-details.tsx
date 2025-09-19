@@ -4,8 +4,9 @@ import type { Trip } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { Star, Building, Plane, Train, Car, Bus, User, Calendar, IndianRupee } from 'lucide-react';
+import { Star, Building, Plane, Train, Car, Bus, User, Calendar, IndianRupee, Image as ImageIcon } from 'lucide-react';
 import { format } from 'date-fns';
+import Image from 'next/image';
 
 type TripDetailsProps = {
   trip: Trip;
@@ -82,6 +83,24 @@ export function TripDetails({ trip }: TripDetailsProps) {
                             </div>
                             {day.notes && <p><span className='font-medium'>Notes:</span> <span className="italic text-muted-foreground">"{day.notes}"</span></p>}
                             {day.cost && <p className="flex items-center gap-1"><span className='font-medium'>Total Day Cost:</span> ₹{day.cost}</p>}
+                            {day.media && day.media.length > 0 && (
+                                <div>
+                                    <p className='font-medium flex items-center gap-2'><ImageIcon className="w-4 h-4" /> Photos & Videos</p>
+                                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 mt-2">
+                                        {/* Mock display for uploaded media */}
+                                        {Array.from({length: day.media.length}).map((_, mediaIndex) => (
+                                             <div key={mediaIndex} className="relative aspect-square rounded-md overflow-hidden bg-muted">
+                                                <Image 
+                                                    src={`https://picsum.photos/seed/${trip.id}-${index}-${mediaIndex}/200`} 
+                                                    alt={`Media ${mediaIndex + 1}`} 
+                                                    fill 
+                                                    className="object-cover"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                         {index < trip.dailyDetails!.length - 1 && <Separator className="my-4" />}
                      </div>

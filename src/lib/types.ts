@@ -9,6 +9,7 @@ export type DailyDetail = {
   food?: string;
   foodCost?: number;
   localTravelCost?: number;
+  media?: any[];
 };
 
 export type Trip = {

@@ -38,6 +38,7 @@ const dailyDetailSchema = z.object({
   foodCost: z.number().optional(),
   localTravelCost: z.number().optional(),
   cost: z.number().optional(),
+  media: z.any().optional(),
 });
 
 const tripSchema = z.object({
@@ -389,6 +390,27 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
                                     </FormItem>
                                 )}
                             />
+                            <FormField
+                                control={form.control}
+                                name={`dailyDetails.${index}.media`}
+                                render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Upload Photos/Videos for Day {index + 1}</FormLabel>
+                                    <FormControl>
+                                    <div className="flex items-center justify-center w-full">
+                                        <label htmlFor={`dropzone-file-${index}`} className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer bg-muted hover:bg-muted/80">
+                                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <Upload className="w-8 h-8 mb-2 text-muted-foreground" />
+                                                <p className="text-sm text-muted-foreground"><span className="font-semibold">Click to upload</span></p>
+                                            </div>
+                                            <Input id={`dropzone-file-${index}`} type="file" className="hidden" {...field} multiple />
+                                        </label>
+                                    </div> 
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                                )}
+                            />
                              <FormField
                                 control={form.control}
                                 name={`dailyDetails.${index}.cost`}
@@ -411,29 +433,7 @@ export function TripForm({ tripToEdit, setDialogOpen }: TripFormProps) {
 
         {currentStep === 2 && (
             <div className="space-y-4">
-                <h3 className="text-lg font-medium">Media Upload</h3>
-                <FormField
-                    control={form.control}
-                    name="media"
-                    render={({ field }) => (
-                        <FormItem>
-                        <FormLabel>Upload Photos or Videos</FormLabel>
-                        <FormControl>
-                             <div className="flex items-center justify-center w-full">
-                                <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer bg-muted hover:bg-muted/80">
-                                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                        <Upload className="w-8 h-8 mb-4 text-muted-foreground" />
-                                        <p className="mb-2 text-sm text-muted-foreground"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                                        <p className="text-xs text-muted-foreground">PNG, JPG, GIF or MP4</p>
-                                    </div>
-                                    <Input id="dropzone-file" type="file" className="hidden" {...field} multiple />
-                                </label>
-                            </div> 
-                        </FormControl>
-                        <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                <h3 className="text-lg font-medium">Trip Summary</h3>
                  <FormField
                     control={form.control}
                     name="totalCost"
