@@ -19,7 +19,7 @@ const config = {
     },
     extend: {
       fontFamily: {
-        body: ['"Exo 2"', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
       },
       colors: {
         border: 'hsl(var(--border))',
