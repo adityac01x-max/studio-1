@@ -72,7 +72,7 @@ export default function ManageAccommodationsPage() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold font-headline">Manage Accommodations</h1>
+            <h1 className="text-3xl font-bold">Manage Accommodations</h1>
             <p className="text-muted-foreground">Add, edit, or remove your property listings.</p>
           </div>
           <Button onClick={handleAddClick}>

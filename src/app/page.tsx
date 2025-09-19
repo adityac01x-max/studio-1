@@ -14,7 +14,7 @@ export default function Home() {
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         <Logo />
         <Button asChild>
-          <Link href="/login">Get Started <ArrowRight className="ml-2" /></Link>
+          <Link href="/login">Get Started <ArrowRight className="ml-2 h-4 w-4" /></Link>
         </Button>
       </header>
 
@@ -32,7 +32,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-background/80" />
           </div>
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
-            <h1 className="font-headline text-4xl md:text-6xl font-bold tracking-tight text-foreground">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground">
               Discover Your Next Adventure
             </h1>
             <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-foreground/80">
@@ -42,7 +42,7 @@ export default function Home() {
               <Button size="lg" asChild>
                 <Link href="/login">
                   Start Your Journey
-                  <ArrowRight className="ml-2" />
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
             </div>
@@ -51,14 +51,14 @@ export default function Home() {
 
         <section className="py-16 bg-background/80">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="font-headline text-3xl font-bold text-center mb-12">Features Designed for the Modern Traveler</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">Features Designed for the Modern Traveler</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card className="text-center bg-card/80 backdrop-blur-sm border-primary/20 hover:border-primary/50 transition-all duration-300">
+              <Card className="text-center bg-card/80 backdrop-blur-sm border-border/20 hover:border-primary/50 transition-all duration-300">
                 <CardHeader>
                   <div className="mx-auto bg-primary/10 rounded-full p-3 w-fit">
                     <Compass className="w-8 h-8 text-primary" />
                   </div>
-                  <CardTitle className="font-headline mt-4">Smart Itinerary Planner</CardTitle>
+                  <CardTitle className="mt-4">Smart Itinerary Planner</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription>
@@ -66,12 +66,12 @@ export default function Home() {
                   </CardDescription>
                 </CardContent>
               </Card>
-              <Card className="text-center bg-card/80 backdrop-blur-sm border-primary/20 hover:border-primary/50 transition-all duration-300">
+              <Card className="text-center bg-card/80 backdrop-blur-sm border-border/20 hover:border-primary/50 transition-all duration-300">
                 <CardHeader>
                   <div className="mx-auto bg-primary/10 rounded-full p-3 w-fit">
                     <Shield className="w-8 h-8 text-primary" />
                   </div>
-                  <CardTitle className="font-headline mt-4">SOS & Safety</CardTitle>
+                  <CardTitle className="mt-4">SOS & Safety</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription>
@@ -79,12 +79,12 @@ export default function Home() {
                   </CardDescription>
                 </CardContent>
               </Card>
-              <Card className="text-center bg-card/80 backdrop-blur-sm border-primary/20 hover:border-primary/50 transition-all duration-300">
+              <Card className="text-center bg-card/80 backdrop-blur-sm border-border/20 hover:border-primary/50 transition-all duration-300">
                 <CardHeader>
                   <div className="mx-auto bg-primary/10 rounded-full p-3 w-fit">
                     <Languages className="w-8 h-8 text-primary" />
                   </div>
-                  <CardTitle className="font-headline mt-4">Multilingual Support</CardTitle>
+                  <CardTitle className="mt-4">Multilingual Support</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription>

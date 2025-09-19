@@ -83,10 +83,10 @@ const mockTrips: Trip[] = [
 ];
 
 const modeIcons = {
-  flight: <Plane className="h-4 w-4" />,
-  train: <Train className="h-4 w-4" />,
-  car: <Car className="h-4 w-4" />,
-  bus: <Bus className="h-4 w-4" />,
+  flight: <Plane className="h-4 w-4 text-muted-foreground" />,
+  train: <Train className="h-4 w-4 text-muted-foreground" />,
+  car: <Car className="h-4 w-4 text-muted-foreground" />,
+  bus: <Bus className="h-4 w-4 text-muted-foreground" />,
 }
 
 export default function DashboardPage() {
@@ -117,7 +117,7 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold font-headline">My Trips</h1>
+          <h1 className="text-3xl font-bold">My Trips</h1>
           <p className="text-muted-foreground">Manage and view your travel plans.</p>
         </div>
          <Button onClick={handleAddClick}>
@@ -150,7 +150,7 @@ export default function DashboardPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Mode</TableHead>
+                <TableHead className="hidden sm:table-cell">Mode</TableHead>
                 <TableHead>Trip</TableHead>
                 <TableHead>Travelers</TableHead>
                 <TableHead>Date & Time</TableHead>
@@ -163,10 +163,10 @@ export default function DashboardPage() {
             <TableBody>
               {mockTrips.map((trip) => (
                 <TableRow key={trip.id}>
-                  <TableCell>
+                  <TableCell className="hidden sm:table-cell">
                     <div className="flex items-center gap-2">
                         {modeIcons[trip.mode]}
-                        <span className="capitalize hidden sm:inline">{trip.mode}</span>
+                        <span className="capitalize">{trip.mode}</span>
                     </div>
                   </TableCell>
                   <TableCell>
@@ -178,9 +178,7 @@ export default function DashboardPage() {
                   </TableCell>
                   <TableCell>{format(trip.startTime, 'MMM d, yyyy, h:mm a')}</TableCell>
                   <TableCell>
-                    <Badge variant={trip.status === 'Completed' ? 'secondary' : 'default'}
-                      className={trip.status === 'Upcoming' ? 'bg-blue-500/20 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400' : ''}
-                    >
+                    <Badge variant={trip.status === 'Completed' ? 'secondary' : 'default'}>
                       {trip.status}
                     </Badge>
                   </TableCell>

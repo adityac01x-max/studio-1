@@ -31,9 +31,9 @@ type LocationPageProps = {
 };
 
 const weatherIcons = {
-    Sun: <Sun/>,
-    Cloud: <Cloud/>,
-    CloudRain: <CloudRain/>,
+    Sun: <Sun className="text-yellow-500" />,
+    Cloud: <Cloud className="text-gray-400" />,
+    CloudRain: <CloudRain className="text-blue-500" />,
 }
 
 export default function LocationPage({ params }: LocationPageProps) {
@@ -93,7 +93,7 @@ export default function LocationPage({ params }: LocationPageProps) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
         <div className="absolute bottom-0 left-0 p-6">
-            <h1 className="font-headline text-4xl md:text-5xl font-bold text-foreground">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground">
                 {locationData.name}
             </h1>
             <p className="mt-2 max-w-2xl text-lg text-foreground/80">{locationData.description}</p>
@@ -158,7 +158,7 @@ export default function LocationPage({ params }: LocationPageProps) {
                                                     <div className="relative h-48 w-full rounded-lg overflow-hidden mb-4">
                                                         <Image src={`https://picsum.photos/seed/${place.name.toLowerCase().replace(/ /g, '-')}/${index}/400/300`} alt={place.name} fill className='object-cover' data-ai-hint={place.imageHint}/>
                                                     </div>
-                                                    <DialogTitle className="text-2xl font-headline">{place.name}</DialogTitle>
+                                                    <DialogTitle className="text-2xl">{place.name}</DialogTitle>
                                                     <DialogDescription className="text-base pt-2">
                                                         {place.description}
                                                     </DialogDescription>
@@ -189,7 +189,7 @@ export default function LocationPage({ params }: LocationPageProps) {
                                 <span className="text-muted-foreground">{day.condition}</span>
                                 <div className="flex items-center gap-2">
                                     <span className="font-semibold">{day.temp}</span>
-                                    <div className="text-muted-foreground">{weatherIcons[day.icon]}</div>
+                                    {weatherIcons[day.icon]}
                                 </div>
                             </div>
                             {index < locationData.weather.length -1 && <Separator className="mt-4"/>}

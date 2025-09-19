@@ -14,7 +14,7 @@ export default function LoginPage() {
         </div>
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="font-headline text-2xl">Welcome Back</CardTitle>
+          <CardTitle className="text-2xl">Welcome Back</CardTitle>
           <CardDescription>Choose your role to sign in.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

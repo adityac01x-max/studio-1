@@ -90,10 +90,10 @@ const chartConfig: ChartConfig = {
 };
 
 const modeIcons = {
-  flight: <Plane className="h-4 w-4" />,
-  train: <Train className="h-4 w-4" />,
-  car: <Car className="h-4 w-4" />,
-  bus: <Bus className="h-4 w-4" />,
+  flight: <Plane className="h-4 w-4 text-muted-foreground" />,
+  train: <Train className="h-4 w-4 text-muted-foreground" />,
+  car: <Car className="h-4 w-4 text-muted-foreground" />,
+  bus: <Bus className="h-4 w-4 text-muted-foreground" />,
 };
 
 export default function LocationAdminPage({ params }: LocationAdminPageProps) {
@@ -105,12 +105,12 @@ export default function LocationAdminPage({ params }: LocationAdminPageProps) {
         <div className="flex items-center gap-4">
             <Button variant="outline" size="icon" asChild>
                 <Link href="/admin">
-                    <ArrowLeft />
+                    <ArrowLeft className="h-4 w-4"/>
                     <span className="sr-only">Back to Admin</span>
                 </Link>
             </Button>
             <div>
-                <h1 className="text-3xl font-bold font-headline">
+                <h1 className="text-3xl font-bold">
                 Location Analytics: {locationName}
                 </h1>
                 <p className="text-muted-foreground">Detailed report of tourist activities and trips.</p>
@@ -121,7 +121,7 @@ export default function LocationAdminPage({ params }: LocationAdminPageProps) {
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Total Trips</CardTitle>
-                    <Car/>
+                    <Car className="h-4 w-4 text-muted-foreground"/>
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold">45</div>
@@ -131,7 +131,7 @@ export default function LocationAdminPage({ params }: LocationAdminPageProps) {
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Itinerary Requests</CardTitle>
-                    <List/>
+                    <List className="h-4 w-4 text-muted-foreground"/>
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold">120</div>
@@ -141,7 +141,7 @@ export default function LocationAdminPage({ params }: LocationAdminPageProps) {
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Total Tourists</CardTitle>
-                    <User/>
+                    <User className="h-4 w-4 text-muted-foreground"/>
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold">85</div>
@@ -151,7 +151,7 @@ export default function LocationAdminPage({ params }: LocationAdminPageProps) {
              <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">SOS Alerts</CardTitle>
-                    <BarChart2/>
+                    <BarChart2 className="h-4 w-4 text-muted-foreground"/>
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold text-destructive">1</div>
@@ -193,9 +193,7 @@ export default function LocationAdminPage({ params }: LocationAdminPageProps) {
                                     <TableCell>{trip.travelers.join(', ')}</TableCell>
                                     <TableCell>{format(trip.startTime, 'MMM d, yyyy')}</TableCell>
                                     <TableCell>
-                                        <Badge variant={trip.status === 'Completed' ? 'secondary' : 'default'}
-                                        className={trip.status === 'Upcoming' ? 'bg-blue-500/20 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400' : ''}
-                                        >
+                                        <Badge variant={trip.status === 'Completed' ? 'secondary' : 'default'}>
                                         {trip.status}
                                         </Badge>
                                     </TableCell>

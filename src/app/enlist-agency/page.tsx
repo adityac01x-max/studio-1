@@ -63,7 +63,7 @@ export default function EnlistAgencyPage() {
       <div className="max-w-2xl mx-auto">
         <Card>
           <CardHeader>
-            <CardTitle className="font-headline text-2xl">Enlist Your Travel Agency</CardTitle>
+            <CardTitle className="text-2xl">Enlist Your Travel Agency</CardTitle>
             <CardDescription>
               Partner with Questify to reach a wider audience and manage your trips seamlessly.
             </CardDescription>

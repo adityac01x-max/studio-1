@@ -46,7 +46,7 @@ export default function ItineraryPlannerPage() {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
       <Card>
         <CardHeader>
-          <CardTitle className="font-headline flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2">
             <Wand2 />
             Create Your Perfect Itinerary
           </CardTitle>
@@ -94,7 +94,7 @@ export default function ItineraryPlannerPage() {
 
       <Card className="min-h-[400px]">
         <CardHeader>
-          <CardTitle className="font-headline flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2">
             <MapPin />
             Your Suggested Itinerary
           </CardTitle>

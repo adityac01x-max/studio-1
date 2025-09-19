@@ -72,15 +72,15 @@ export function Chatbot() {
         <Button
           variant="outline"
           size="icon"
-          className="fixed bottom-6 left-6 h-16 w-16 rounded-full shadow-lg z-50 border-2 border-primary bg-background/60 backdrop-blur-sm"
+          className="fixed bottom-6 left-6 h-16 w-16 rounded-full shadow-lg z-50"
         >
-          <MessageSquare className="h-8 w-8 text-primary animate-pulse" />
+          <MessageSquare className="h-8 w-8 text-primary" />
           <span className="sr-only">Open Chat</span>
         </Button>
       </SheetTrigger>
       <SheetContent className="w-full sm:max-w-md flex flex-col p-0">
         <SheetHeader className="p-6 pb-4 border-b">
-          <SheetTitle className="flex items-center gap-2 font-headline">
+          <SheetTitle className="flex items-center gap-2">
             <Bot />
             Questify Support
           </SheetTitle>
@@ -108,7 +108,7 @@ export function Chatbot() {
                     'max-w-xs rounded-lg px-4 py-2',
                     message.isUser
                       ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted text-muted-foreground'
+                      : 'bg-muted'
                   )}
                 >
                   {message.text}
@@ -125,7 +125,7 @@ export function Chatbot() {
                     <Avatar className="h-8 w-8">
                         <AvatarFallback><Bot size={20} /></AvatarFallback>
                     </Avatar>
-                    <div className="bg-muted text-muted-foreground max-w-xs rounded-lg px-4 py-2 flex items-center">
+                    <div className="bg-muted max-w-xs rounded-lg px-4 py-2 flex items-center">
                         <Loader2 className="h-5 w-5 animate-spin"/>
                     </div>
                 </div>

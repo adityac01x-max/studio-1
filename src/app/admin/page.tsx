@@ -32,7 +32,7 @@ const mockAlerts: SOSAlert[] = [
   { id: '1', userName: 'Anjali Sharma', location: 'Goa', time: new Date('2024-08-10T14:30:00'), status: 'Pending' },
   { id: '2', userName: 'Rohan Mehra', location: 'Shimla', time: new Date('2024-08-10T12:15:00'), status: 'Resolved', resolution: 'Contacted local authorities and confirmed user was safe. Lost, but found way back.', caseId: 'SH-24-08-123' },
   { id: '3', userName: 'Priya Singh', location: 'Jaipur', time: new Date('2024-08-09T22:00:00'), status: 'Resolved', resolution: 'Medical emergency. Ambulance dispatched and user was transported to a local hospital. User confirmed to be in stable condition.', caseId: 'JP-24-08-456' },
-  { id: '4', userName: 'Vikram Rathod', location: 'Mumbai', time: new Date('2024-08-10T15:00:00'), status: 'In Progress', resolution: 'Initial contact made. User is reporting a vehicle breakdown. Coordinating with a local tow service.' },
+  { id: '4', userName: 'Vikram Rathod', location: 'Mumbai', time: new Date('2024-08-10T15:00:00'), status: 'In Progress' },
 ];
 
 const tripsData = [
@@ -77,26 +77,32 @@ export default function AdminPage() {
   return (
     <AppShell>
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold font-headline">Admin Dashboard</h1>
+        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <Card>
                 <CardHeader>
                     <CardTitle>Total Trips (6 months)</CardTitle>
-                    <CardDescription>1,424</CardDescription>
                 </CardHeader>
+                <CardContent>
+                    <p className="text-3xl font-bold">1,424</p>
+                </CardContent>
             </Card>
             <Card>
                 <CardHeader>
                     <CardTitle>Active SOS Alerts</CardTitle>
-                    <CardDescription>2</CardDescription>
                 </CardHeader>
+                <CardContent>
+                    <p className="text-3xl font-bold text-destructive">2</p>
+                </CardContent>
             </Card>
              <Card>
                 <CardHeader>
                     <CardTitle>Total Itinerary Requests</CardTitle>
-                    <CardDescription>635</CardDescription>
                 </CardHeader>
+                <CardContent>
+                    <p className="text-3xl font-bold">635</p>
+                </CardContent>
             </Card>
         </div>
         

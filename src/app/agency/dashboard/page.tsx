@@ -75,15 +75,14 @@ const tripTypeData = [
 const tripTypeChartConfig: ChartConfig = {
     count: {
         label: "Count",
-        color: "hsl(var(--secondary-foreground))",
     }
 }
 
 const modeIcons = {
-  flight: <Plane className="h-4 w-4" />,
-  train: <Train className="h-4 w-4" />,
-  car: <Car className="h-4 w-4" />,
-  bus: <Bus className="h-4 w-4" />,
+  flight: <Plane className="h-4 w-4 text-muted-foreground" />,
+  train: <Train className="h-4 w-4 text-muted-foreground" />,
+  car: <Car className="h-4 w-4 text-muted-foreground" />,
+  bus: <Bus className="h-4 w-4 text-muted-foreground" />,
 }
 
 
@@ -93,7 +92,7 @@ export default function AgencyDashboardPage() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold font-headline">Agency Dashboard</h1>
+            <h1 className="text-3xl font-bold">Agency Dashboard</h1>
             <p className="text-muted-foreground">Manage your trips and view analytics.</p>
           </div>
           <Dialog>
@@ -115,7 +114,7 @@ export default function AgencyDashboardPage() {
              <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Total Bookings</CardTitle>
-                    <ListChecks/>
+                    <ListChecks className="h-4 w-4 text-muted-foreground"/>
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold">78</div>
@@ -125,7 +124,7 @@ export default function AgencyDashboardPage() {
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Upcoming Trips</CardTitle>
-                    <Plane/>
+                    <Plane className="h-4 w-4 text-muted-foreground"/>
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold">12</div>
@@ -135,7 +134,7 @@ export default function AgencyDashboardPage() {
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-                    <DollarSign/>
+                    <DollarSign className="h-4 w-4 text-muted-foreground"/>
                 </CardHeader>
                 <CardContent>
                     <div className="text-2xl font-bold">₹8,50,000</div>
@@ -218,9 +217,7 @@ export default function AgencyDashboardPage() {
                     </TableCell>
                     <TableCell>{format(trip.startTime, 'MMM d, yyyy, h:mm a')}</TableCell>
                     <TableCell>
-                      <Badge variant={trip.status === 'Completed' ? 'secondary' : 'default'}
-                        className={trip.status === 'Upcoming' ? 'bg-blue-500/20 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400' : ''}
-                      >
+                      <Badge variant={trip.status === 'Completed' ? 'secondary' : 'default'}>
                         {trip.status}
                       </Badge>
                     </TableCell>
