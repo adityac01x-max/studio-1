@@ -75,6 +75,7 @@ const tripTypeData = [
 const tripTypeChartConfig: ChartConfig = {
     count: {
         label: "Count",
+        color: "hsl(var(--accent))",
     }
 }
 
